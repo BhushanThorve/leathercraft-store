@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeatherCraft — Premium Leather Bags</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brown:   #5c3d2e;
+      --dark:    #2b1d12;
+      --cream:   #f5efe6;
+      --accent:  #c4813a;
+      --light:   #fdf8f2;
+      --gray:    #6b6b6b;
+      --border:  #e0d5c9;
+      --shadow:  rgba(44,24,10,.12);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--light); color: var(--dark); }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ─── Header ────────────────────────────────────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 64px;
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+    .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: .04em; color: #fff; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 2rem; }
+    nav a { color: #ccc; font-size: .95rem; transition: color .2s; }
+    nav a:hover { color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 1.2rem; }
+    .cart-btn {
+      position: relative; background: var(--accent); color: #fff;
+      border-radius: 50px; padding: .45rem 1.1rem;
+      font-size: .9rem; font-weight: 600; display: flex; align-items: center; gap: .5rem;
+      transition: background .2s;
+    }
+    .cart-btn:hover { background: #b06d28; }
+    .cart-count {
+      background: #fff; color: var(--accent);
+      border-radius: 50%; width: 20px; height: 20px;
+      font-size: .75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ─── Hero ──────────────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, #3d2414 60%, #5c3d2e 100%);
+      color: #fff; padding: 90px 5% 80px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+    }
+    .hero-text h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.2; margin-bottom: 1.2rem; }
+    .hero-text h1 span { color: var(--accent); }
+    .hero-text p { color: #c9b8a8; font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; max-width: 440px; }
+    .btn-primary {
+      display: inline-block; background: var(--accent); color: #fff;
+      padding: .85rem 2.2rem; border-radius: 50px; font-weight: 700; font-size: 1rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: #b06d28; transform: translateY(-2px); }
+    .hero-image-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .hero-img-card {
+      border-radius: 12px; overflow: hidden;
+      aspect-ratio: 3/4; background: var(--brown);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; color: rgba(255,255,255,.15);
+    }
+    .hero-img-card:nth-child(1) { margin-top: 30px; }
+    .hero-img-card:nth-child(4) { margin-top: -30px; }
+    .hero-img-card img { object-fit: cover; width: 100%; height: 100%; }
+
+    /* ─── Section Heading ───────────────────────────────────────────────────── */
+    .section { padding: 70px 5%; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header h2 { font-size: 2rem; color: var(--dark); margin-bottom: .5rem; }
+    .section-header p { color: var(--gray); font-size: 1.05rem; }
+    .divider { width: 50px; height: 3px; background: var(--accent); margin: .8rem auto 0; border-radius: 4px; }
+
+    /* ─── Product Grid ──────────────────────────────────────────────────────── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .product-card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 2px 14px var(--shadow); transition: transform .25s, box-shadow .25s;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 8px 28px var(--shadow); }
+    .product-img {
+      aspect-ratio: 4/3; background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative; overflow: hidden;
+    }
+    .badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--accent); color: #fff; font-size: .72rem; font-weight: 700;
+      padding: .25rem .65rem; border-radius: 50px; text-transform: uppercase;
+    }
+    .product-info { padding: 1.2rem; }
+    .product-category { font-size: .78rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .product-name { font-size: 1.1rem; font-weight: 700; margin: .3rem 0 .5rem; color: var(--dark); }
+    .product-desc { font-size: .87rem; color: var(--gray); line-height: 1.6; margin-bottom: 1rem; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .price { font-size: 1.25rem; font-weight: 700; color: var(--brown); }
+    .price-old { font-size: .85rem; color: #aaa; text-decoration: line-through; margin-left: .3rem; }
+    .add-cart-btn {
+      background: var(--dark); color: #fff; border-radius: 50px;
+      padding: .5rem 1.1rem; font-size: .85rem; font-weight: 600;
+      transition: background .2s, transform .15s;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .add-cart-btn:hover { background: var(--brown); transform: scale(1.05); }
+
+    /* ─── Features Strip ────────────────────────────────────────────────────── */
+    .features { background: var(--cream); }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;
+    }
+    .feature-card { text-align: center; padding: 1rem; }
+    .feature-icon { font-size: 2.5rem; margin-bottom: .8rem; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; color: var(--dark); }
+    .feature-card p { font-size: .87rem; color: var(--gray); line-height: 1.5; }
+
+    /* ─── Testimonials ──────────────────────────────────────────────────────── */
+    .testimonials { background: var(--dark); color: #fff; }
+    .testimonials .section-header h2 { color: #fff; }
+    .testimonials .section-header p { color: #c9b8a8; }
+    .testimonials .divider { background: var(--accent); }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .testimonial-card {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 1.5rem;
+    }
+    .stars { color: #f5c842; font-size: 1rem; margin-bottom: .8rem; }
+    .testimonial-card p { color: #d4c4b8; font-size: .92rem; line-height: 1.7; margin-bottom: 1rem; }
+    .reviewer { display: flex; align-items: center; gap: .8rem; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--brown); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .reviewer-name { font-weight: 600; font-size: .92rem; }
+    .reviewer-loc { font-size: .78rem; color: #9a8a7e; }
+
+    /* ─── Newsletter ────────────────────────────────────────────────────────── */
+    .newsletter { background: var(--accent); color: #fff; text-align: center; padding: 60px 5%; }
+    .newsletter h2 { font-size: 1.8rem; margin-bottom: .6rem; }
+    .newsletter p { font-size: 1rem; opacity: .9; margin-bottom: 1.8rem; }
+    .newsletter-form { display: flex; max-width: 480px; margin: 0 auto; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+    .newsletter-form input {
+      flex: 1; min-width: 220px; padding: .85rem 1.2rem; border-radius: 50px;
+      border: none; font-size: .95rem; outline: none;
+    }
+    .newsletter-form button {
+      background: var(--dark); color: #fff; padding: .85rem 1.8rem; border-radius: 50px;
+      font-weight: 700; font-size: .95rem; transition: background .2s;
+    }
+    .newsletter-form button:hover { background: #1a0e07; }
+
+    /* ─── Footer ────────────────────────────────────────────────────────────── */
+    footer { background: #1a0e07; color: #c9b8a8; padding: 50px 5% 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+    .footer-brand .logo { font-size: 1.3rem; margin-bottom: .8rem; }
+    .footer-brand p { font-size: .88rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: #fff; font-size: .95rem; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul li a { font-size: .87rem; color: #9a8a7e; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid #2e1e10; padding-top: 1.5rem; text-align: center; font-size: .82rem; color: #6b5a4e; }
+
+    /* ─── Cart Sidebar ──────────────────────────────────────────────────────── */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-sidebar {
+      position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw;
+      height: 100%; background: #fff; z-index: 201; display: flex; flex-direction: column;
+      transition: right .35s cubic-bezier(.4,0,.2,1);
+      box-shadow: -4px 0 30px var(--shadow);
+    }
+    .cart-sidebar.open { right: 0; }
+    .cart-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--border);
+    }
+    .cart-head h3 { font-size: 1.2rem; color: var(--dark); }
+    .close-cart { font-size: 1.6rem; color: var(--gray); transition: color .2s; line-height: 1; }
+    .close-cart:hover { color: var(--dark); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 1.2rem 1.6rem; display: flex; flex-direction: column; gap: 1rem; }
+    .cart-empty { text-align: center; color: var(--gray); margin: auto; padding: 3rem 0; }
+    .cart-empty .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .cart-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .cart-item-img { width: 70px; height: 70px; border-radius: 10px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
+    .cart-item-details { flex: 1; }
+    .cart-item-name { font-weight: 600; font-size: .95rem; color: var(--dark); }
+    .cart-item-price { color: var(--brown); font-weight: 700; font-size: .95rem; margin: .2rem 0; }
+    .qty-controls { display: flex; align-items: center; gap: .5rem; margin-top: .4rem; }
+    .qty-btn { width: 26px; height: 26px; border-radius: 6px; background: var(--cream); color: var(--dark); font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+    .qty-btn:hover { background: var(--border); }
+    .qty-num { font-size: .9rem; font-weight: 600; min-width: 20px; text-align: center; }
+    .remove-item { color: #e05050; font-size: 1.2rem; margin-left: auto; }
+    .remove-item:hover { color: #c03030; }
+    .cart-footer { padding: 1.4rem 1.6rem; border-top: 1px solid var(--border); }
+    .cart-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--dark); }
+    .checkout-btn {
+      display: block; width: 100%; background: var(--dark); color: #fff;
+      padding: 1rem; border-radius: 50px; font-size: 1rem; font-weight: 700;
+      text-align: center; transition: background .2s;
+    }
+    .checkout-btn:hover { background: var(--brown); }
+
+    /* ─── Toast ──────────────────────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--dark); color: #fff; padding: .75rem 1.6rem;
+      border-radius: 50px; font-size: .9rem; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 300;
+      transition: transform .35s cubic-bezier(.4,0,.2,1); pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ─── Responsive ─────────────────────────────────────────────────────────── */
+    /* ─── Checkout Modal ─────────────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+      padding: 1rem;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 560px;
+      max-height: 90vh; display: flex; flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      transform: translateY(30px); transition: transform .3s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .modal-head h3 { font-size: 1.2rem; color: var(--dark); }
+    .modal-body { padding: 1.4rem 1.6rem; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+    .modal-footer { padding: 1.2rem 1.6rem; border-top: 1px solid var(--border); flex-shrink: 0; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label { font-size: .82rem; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: .04em; }
+    .form-group input {
+      padding: .7rem 1rem; border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: .95rem; font-family: inherit; outline: none; transition: border-color .2s;
+    }
+    .form-group input:focus { border-color: var(--accent); }
+    .order-summary { background: var(--cream); border-radius: 12px; padding: 1rem 1.2rem; margin-top: .5rem; }
+    .order-summary h4 { font-size: .85rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .8rem; }
+    .summary-item { display: flex; justify-content: space-between; font-size: .9rem; color: var(--dark); padding: .3rem 0; }
+    .summary-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; color: var(--brown); border-top: 1px solid var(--border); margin-top: .6rem; padding-top: .6rem; }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 5%; }
+      .hero-text p { margin: 0 auto 2rem; }
+      .hero-image-grid { max-width: 340px; margin: 0 auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .cart-sidebar { width: 100vw; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HEADER ───────────────────────────────────────────────────────────────── -->
+<header>
+  <div class="logo">Leather<span>Craft</span></div>
+  <nav>
+    <a href="#products">Shop</a>
+    <a href="#features">Why Us</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#newsletter">Contact</a>
+  </nav>
+  <div class="header-right">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛍 Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ─── HERO ──────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Handcrafted<br /><span>Leather Bags</span><br />for Every Journey</h1>
+    <p>Each bag is hand-stitched using full-grain leather sourced from sustainable tanneries. Built to last a lifetime, designed to turn heads.</p>
+    <a href="#products" class="btn-primary">Shop the Collection</a>
+  </div>
+  <div class="hero-image-grid">
+    <div class="hero-img-card">🎒</div>
+    <div class="hero-img-card">👜</div>
+    <div class="hero-img-card">💼</div>
+    <div class="hero-img-card">🧳</div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS ──────────────────────────────────────────────────────────────── -->
+<section class="section" id="products">
+  <div class="section-header">
+    <h2>Our Collection</h2>
+    <p>Premium full-grain leather, zero compromises</p>
+    <div class="divider"></div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- ─── FEATURES ─────────────────────────────────────────────────────────────── -->
+<section class="section features" id="features">
+  <div class="section-header">
+    <h2>Why LeatherCraft?</h2>
+    <p>We stand behind every stitch</p>
+    <div class="divider"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🌿</div>
+      <h3>Sustainably Sourced</h3>
+      <p>Full-grain leather from certified, eco-conscious tanneries with transparent supply chains.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✋</div>
+      <h3>100% Handcrafted</h3>
+      <p>Every bag is hand-cut, hand-stitched, and hand-finished by skilled artisans.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Lifetime Guarantee</h3>
+      <p>We stand behind our craftsmanship. If anything breaks, we'll repair or replace it free.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚚</div>
+      <h3>Free Shipping</h3>
+      <p>Complimentary worldwide shipping on all orders over $150. Delivered in 3–5 business days.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">↩️</div>
+      <h3>30-Day Returns</h3>
+      <p>Not in love with your bag? Return it within 30 days for a full, no-questions-asked refund.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎁</div>
+      <h3>Gift Wrapping</h3>
+      <p>Every order ships in our signature gift box with a personalised handwritten card.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ──────────────────────────────────────────────────────────── -->
+<section class="section testimonials" id="testimonials">
+  <div class="section-header">
+    <h2>Customer Love</h2>
+    <p>Real reviews from real customers</p>
+    <div class="divider"></div>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"The quality is unreal. I've had my Nomad Backpack for two years and it only looks better with age. This is the last bag I'll ever buy."</p>
+      <div class="reviewer">
+        <div class="avatar">👨</div>
+        <div>
+          <div class="reviewer-name">James M.</div>
+          <div class="reviewer-loc">New York, USA</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"I bought the Classic Tote as a work bag and get compliments every single day. The leather is buttery soft and the hardware is super solid."</p>
+      <div class="reviewer">
+        <div class="avatar">👩</div>
+        <div>
+          <div class="reviewer-name">Priya S.</div>
+          <div class="reviewer-loc">London, UK</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Ordered the Executive Briefcase for my husband's birthday. He absolutely loves it — the craftsmanship is incredible and packaging was stunning."</p>
+      <div class="reviewer">
+        <div class="avatar">👩</div>
+        <div>
+          <div class="reviewer-name">Sophie L.</div>
+          <div class="reviewer-loc">Melbourne, AU</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWSLETTER ─────────────────────────────────────────────────────────────── -->
+<section class="newsletter" id="newsletter">
+  <h2>Join the Craft Community</h2>
+  <p>Get early access to new drops, care tips, and 10% off your first order.</p>
+  <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+    <input type="email" placeholder="your@email.com" required />
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Leather<span>Craft</span></div>
+      <p>Handcrafted leather goods made with love and lasting quality. Each piece tells a story — yours starts here.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Backpacks</a></li>
+        <li><a href="#">Tote Bags</a></li>
+        <li><a href="#">Briefcases</a></li>
+        <li><a href="#">Crossbody Bags</a></li>
+        <li><a href="#">Wallets</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Care Guide</a></li>
+        <li><a href="#">Track Order</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 LeatherCraft. All rights reserved. &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Terms of Service
+  </div>
+</footer>
+
+<!-- ─── CART SIDEBAR ──────────────────────────────────────────────────────────── -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="empty-icon">🛍</div>
+      <p>Your cart is empty</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- ─── CHECKOUT MODAL ────────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="checkoutModal" onclick="handleModalOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Checkout</h3>
+      <button class="close-cart" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="submitOrder(event)" autocomplete="on">
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" name="name" placeholder="Jane Smith" required />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" placeholder="jane@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="+1 555 000 0000" />
+        </div>
+        <div class="form-group">
+          <label>Shipping Address</label>
+          <input type="text" name="address" placeholder="123 Main Street" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" name="city" placeholder="New York" />
+          </div>
+          <div class="form-group">
+            <label>Country</label>
+            <input type="text" name="country" placeholder="USA" />
+          </div>
+        </div>
+        <div class="order-summary" id="modalOrderSummary"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="checkout-btn">Place Order →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ─── TOAST ─────────────────────────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ── Product Data ─────────────────────────────────────────────────────────── */
+  const products = [
+    { id:1, name:"Nomad Backpack",       category:"Backpack",    price:249, oldPrice:299, emoji:"🎒", badge:"Best Seller", desc:"Rugged full-grain leather with padded laptop sleeve and brass fittings. Perfect for daily commutes and weekend adventures." },
+    { id:2, name:"Classic Tote",         category:"Tote",        price:189, oldPrice:null, emoji:"👜", badge:null,         desc:"Spacious, open-top tote with an interior zip pocket. Hand-stitched reinforced handles that won't stretch over time." },
+    { id:3, name:"Executive Briefcase",  category:"Briefcase",   price:329, oldPrice:399, emoji:"💼", badge:"New",        desc:"Two-gusset briefcase with shoulder strap, combination lock, and four organizational pockets for the modern professional." },
+    { id:4, name:"City Crossbody",       category:"Crossbody",   price:149, oldPrice:null, emoji:"👝", badge:null,         desc:"Compact and stylish. Fits all your essentials with an adjustable strap and antique-brass magnetic closure." },
+    { id:5, name:"Vintage Duffel",       category:"Duffel",      price:279, oldPrice:319, emoji:"🧳", badge:"Sale",       desc:"Weekend-ready duffel with a waterproof lining, removable shoe bag, and rolled leather handles." },
+    { id:6, name:"Slim Messenger",       category:"Messenger",   price:199, oldPrice:null, emoji:"🗂️", badge:null,         desc:"Minimalist flap messenger with a quick-release buckle, hidden back pocket, and full-grain Veg-tan leather body." },
+    { id:7, name:"Mini Bucket Bag",      category:"Bucket",      price:169, oldPrice:199, emoji:"🪣", badge:"Sale",       desc:"Drawstring closure with a detachable leather pouch. Comes in two colourways — caramel and midnight brown." },
+    { id:8, name:"Laptop Satchel",       category:"Satchel",     price:289, oldPrice:null, emoji:"💼", badge:"New",        desc:"Structured satchel with a padded 15\" laptop compartment, two exterior pockets, and a polished turnlock." },
+  ];
+
+  const API = (location.protocol === 'file:' || !location.hostname) ? 'http://localhost:3000/api' : '/api';
+  let cart = {};
+
+  /* ── Render Products ──────────────────────────────────────────────────────── */
+  function renderProducts() {
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div class="product-img">
+          ${p.badge ? `<div class="badge">${p.badge}</div>` : ''}
+          <span>${p.emoji}</span>
+        </div>
+        <div class="product-info">
+          <div class="product-category">${p.category}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-footer">
+            <div>
+              <span class="price">$${p.price}</span>
+              ${p.oldPrice ? `<span class="price-old">$${p.oldPrice}</span>` : ''}
+            </div>
+            <button class="add-cart-btn" onclick="addToCart(${p.id})">
+              + Add
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ── Cart Logic ───────────────────────────────────────────────────────────── */
+  function addToCart(id) {
+    cart[id] = (cart[id] || 0) + 1;
+    updateCartUI();
+    const p = products.find(x => x.id === id);
+    showToast(`${p.emoji} ${p.name} added to cart!`);
+  }
+
+  function changeQty(id, delta) {
+    cart[id] = (cart[id] || 0) + delta;
+    if (cart[id] <= 0) delete cart[id];
+    updateCartUI();
+  }
+
+  function removeFromCart(id) {
+    delete cart[id];
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const total = Object.values(cart).reduce((a, b) => a + b, 0);
+    document.getElementById('cartCount').textContent = total;
+
+    const items = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFooter');
+
+    if (Object.keys(cart).length === 0) {
+      items.innerHTML = `<div class="cart-empty"><div class="empty-icon">🛍</div><p>Your cart is empty</p></div>`;
+      footer.style.display = 'none';
+      return;
+    }
+
+    footer.style.display = 'block';
+    let subtotal = 0;
+    items.innerHTML = Object.entries(cart).map(([id, qty]) => {
+      const p = products.find(x => x.id === +id);
+      subtotal += p.price * qty;
+      return `
+        <div class="cart-item">
+          <div class="cart-item-img">${p.emoji}</div>
+          <div class="cart-item-details">
+            <div class="cart-item-name">${p.name}</div>
+            <div class="cart-item-price">$${p.price}</div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
+              <span class="qty-num">${qty}</span>
+              <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
+            </div>
+          </div>
+          <button class="remove-item" onclick="removeFromCart(${p.id})">×</button>
+        </div>`;
+    }).join('');
+
+    document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
+  }
+
+  /* ── Cart Open/Close ──────────────────────────────────────────────────────── */
+  function toggleCart() {
+    document.getElementById('cartSidebar').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('open');
+    document.body.style.overflow = document.getElementById('cartSidebar').classList.contains('open') ? 'hidden' : '';
+  }
+
+  /* ── Checkout ─────────────────────────────────────────────────────────────── */
+  function checkout() {
+    // Populate order summary inside modal
+    let subtotal = 0;
+    const lines = Object.entries(cart).map(([id, qty]) => {
+      const p = products.find(x => x.id === +id);
+      subtotal += p.price * qty;
+      return `<div class="summary-item"><span>${p.emoji} ${p.name} × ${qty}</span><span>$${(p.price * qty).toFixed(2)}</span></div>`;
+    }).join('');
+    document.getElementById('modalOrderSummary').innerHTML =
+      `<h4>Order Summary</h4>${lines}<div class="summary-total"><span>Total</span><span>$${subtotal.toFixed(2)}</span></div>`;
+
+    toggleCart();
+    document.getElementById('checkoutModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function handleModalOverlayClick(e) {
+    if (e.target === e.currentTarget) closeModal();
+  }
+
+  async function submitOrder(e) {
+    e.preventDefault();
+    const f = e.target;
+    const cartPayload = {};
+    for (const [id, qty] of Object.entries(cart)) {
+      const p = products.find(x => x.id === +id);
+      cartPayload[id] = { name: p.name, price: p.price, qty };
+    }
+    const btn = f.querySelector('button[type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Placing order…';
+    try {
+      const res = await fetch(API + '/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    f.name.value,
+          email:   f.email.value,
+          phone:   f.phone.value,
+          address: f.address.value,
+          city:    f.city.value,
+          country: f.country.value,
+          cart:    cartPayload
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      closeModal();
+      cart = {};
+      updateCartUI();
+      showToast(`🎉 Order #${data.orderId} confirmed! Total: $${data.total.toFixed(2)}`);
+    } catch (err) {
+      showToast('⚠️ ' + (err.message || 'Could not place order.'));
+      btn.disabled = false;
+      btn.textContent = 'Place Order';
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('checkoutModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ── Newsletter ───────────────────────────────────────────────────────────── */
+  async function handleNewsletter(e) {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type=email]').value;
+    try {
+      const res = await fetch(API + '/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      showToast('🎉 Subscribed! Check your inbox for 10% off.');
+      e.target.reset();
+    } catch (err) {
+      showToast('⚠️ ' + (err.message || 'Subscription failed.'));
+    }
+  }
+
+  /* ── Toast ────────────────────────────────────────────────────────────────── */
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  /* ── Init ─────────────────────────────────────────────────────────────────── */
+  renderProducts();
+</script>
+</body>
+</html>
