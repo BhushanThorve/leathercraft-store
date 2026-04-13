@@ -22,12 +22,27 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 // ── Database Setup ────────────────────────────────────────────────────────────
+if (!process.env.DATABASE_URL) {
+  console.error('❌ DATABASE_URL is not set. Make sure the Render PostgreSQL database is linked.');
+  process.exit(1);
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-async function initDB() {
+async function initDB(retries = 10, delay = 5000) {
+  for (let i = 1; i <= retries; i++) {
+    try {
+      await pool.query('SELECT 1'); // test connection
+      break;
+    } catch (err) {
+      if (i === retries) throw err;
+      console.log(`⏳ DB not ready (attempt ${i}/${retries}), retrying in ${delay/1000}s…`);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
   await pool.query(`
     CREATE TABLE IF NOT EXISTS subscribers (
       id         SERIAL PRIMARY KEY,
