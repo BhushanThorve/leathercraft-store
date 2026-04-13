@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: leathercraft-store
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /var/data/store.db
+    disk:
+      name: sqlite-data
+      mountPath: /var/data
+      sizeGB: 1
