@@ -45,6 +45,56 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .hicon:hover{background:var(--gray-lt);color:var(--espresso)}
 .hicon .emoji{font-size:1.25rem;line-height:1}
 .badge-dot{position:absolute;top:4px;right:6px;width:16px;height:16px;background:var(--gold);color:#fff;border-radius:50%;font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+/* ─── AUTH HEADER BUTTONS ────────────────────────────────────────────────── */
+.auth-btns{display:flex;align-items:center;gap:.5rem;margin-right:.4rem}
+.btn-signin{padding:.42rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:600;color:var(--espresso);border:1.5px solid var(--border);background:#fff;transition:all .15s;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap}
+.btn-signin:hover{border-color:var(--gold);background:var(--cream)}
+.btn-signup{padding:.42rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:700;color:#fff;border:none;background:var(--espresso);transition:all .15s;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap}
+.btn-signup:hover{background:var(--brown)}
+/* User avatar pill (logged-in state) */
+.user-pill{display:flex;align-items:center;gap:.55rem;padding:.35rem .75rem .35rem .35rem;border-radius:50px;border:1.5px solid var(--border);background:#fff;cursor:pointer;transition:all .15s;position:relative;font-family:'Inter',sans-serif}
+.user-pill:hover{border-color:var(--gold);background:var(--cream)}
+.user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--espresso));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0;font-family:'Playfair Display',serif}
+.user-name-pill{font-size:.8rem;font-weight:600;color:var(--espresso);max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* User dropdown */
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 32px var(--shadow);min-width:200px;padding:.5rem;z-index:500;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .2s,transform .2s}
+.user-pill.open .user-dropdown{opacity:1;pointer-events:all;transform:translateY(0)}
+.user-dd-header{padding:.7rem .9rem .5rem;border-bottom:1px solid var(--border);margin-bottom:.4rem}
+.user-dd-name{font-weight:700;font-size:.88rem;color:var(--espresso)}
+.user-dd-email{font-size:.75rem;color:var(--gray);margin-top:.1rem}
+.user-dd-item{display:flex;align-items:center;gap:.6rem;padding:.55rem .9rem;border-radius:8px;font-size:.83rem;color:var(--text);cursor:pointer;transition:background .12s;width:100%;border:none;background:none;font-family:'Inter',sans-serif;text-align:left}
+.user-dd-item:hover{background:var(--cream)}
+.user-dd-item.danger{color:var(--red)}
+.user-dd-item.danger:hover{background:#fef2f2}
+
+/* ─── AUTH MODAL ──────────────────────────────────────────────────────────── */
+.auth-modal-bg{position:fixed;inset:0;background:rgba(26,10,0,.55);z-index:600;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
+.auth-modal-bg.open{opacity:1;pointer-events:all}
+.auth-modal{background:#fff;border-radius:24px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(26,10,0,.22);transform:translateY(16px) scale(.97);transition:transform .3s cubic-bezier(.34,1.56,.64,1);overflow:hidden}
+.auth-modal-bg.open .auth-modal{transform:translateY(0) scale(1)}
+.auth-modal-head{padding:1.6rem 1.8rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.auth-modal-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+.auth-modal-logo em{font-style:italic;color:var(--gold)}
+.auth-modal-close{width:30px;height:30px;border-radius:50%;background:var(--cream);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gray);transition:background .15s}
+.auth-modal-close:hover{background:var(--border)}
+.auth-modal-body{padding:1.8rem}
+.auth-modal-body h2{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--espresso);margin-bottom:.35rem}
+.auth-modal-body p{font-size:.85rem;color:var(--gray);margin-bottom:1.6rem;line-height:1.5}
+.auth-field{margin-bottom:1.1rem}
+.auth-field label{display:block;font-size:.78rem;font-weight:700;color:var(--espresso);margin-bottom:.4rem;letter-spacing:.02em}
+.auth-field input{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;font-family:'Inter',sans-serif;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;background:var(--warm-white)}
+.auth-field input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,112,42,.12)}
+.auth-field input::placeholder{color:var(--gray2,#b09880)}
+.auth-err{font-size:.8rem;color:var(--red);margin-bottom:.8rem;min-height:1.1rem;display:none}
+.auth-err.show{display:block}
+.auth-submit{width:100%;height:46px;border-radius:10px;background:var(--espresso);color:#fff;font-size:.92rem;font-weight:700;border:none;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.03em;transition:background .2s,transform .15s;margin-top:.4rem}
+.auth-submit:hover{background:var(--brown);transform:translateY(-1px)}
+.auth-submit:active{transform:scale(.98)}
+.auth-divider{display:flex;align-items:center;gap:.8rem;margin:1.2rem 0;color:var(--gray);font-size:.78rem}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-switch{text-align:center;font-size:.83rem;color:var(--gray);margin-top:1rem}
+.auth-switch a{color:var(--gold);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+
 /* ─── NAV BAR ─────────────────────────────────────────────────────────────── */
 .nav-bar{border-top:1px solid var(--border);background:#fff}
 .nav-inner{display:flex;align-items:center;justify-content:center;gap:0;padding:0 4%}
@@ -55,29 +105,71 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-item:hover::after{left:1.1rem;right:1.1rem}
 
 /* ─── HERO ────────────────────────────────────────────────────────────────── */
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;overflow:hidden}
-.hero-left{background:linear-gradient(150deg,#3A1208 0%,#5C2010 50%,#7A3018 100%);padding:5% 6%;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.hero-left::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8922A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
-.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,146,42,.15);border:1px solid rgba(200,146,42,.3);color:var(--gold-lt);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.4rem .9rem;border-radius:50px;margin-bottom:1.8rem;width:fit-content}
-.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.5vw,4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1.2rem}
+.hero-section{padding:32px 4% 48px;background:var(--warm-white)}
+.hero-card{
+  position:relative;overflow:hidden;border-radius:48px;
+  border:1px solid var(--border);background:#fff;
+  min-height:600px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  box-shadow:0 4px 40px var(--shadow);
+  transition:box-shadow .4s;cursor:default;
+}
+.hero-card:hover{box-shadow:0 8px 60px rgba(107,42,16,.18)}
+/* Dithering canvas */
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;mix-blend-mode:multiply;opacity:.45}
+/* Decorative floating bag emojis */
+.hero-float{position:absolute;pointer-events:none;z-index:1;transition:transform .6s ease;user-select:none;line-height:1}
+.hero-float-1{top:8%;left:4%;font-size:5rem;transform:rotate(-12deg)}
+.hero-float-2{top:8%;right:4%;font-size:4.5rem;transform:rotate(10deg)}
+.hero-float-3{bottom:10%;left:6%;font-size:4rem;transform:rotate(8deg)}
+.hero-float-4{bottom:8%;right:5%;font-size:4.8rem;transform:rotate(-8deg)}
+.hero-card:hover .hero-float-1{transform:rotate(-12deg) translateY(-6px)}
+.hero-card:hover .hero-float-2{transform:rotate(10deg) translateY(-8px)}
+.hero-card:hover .hero-float-3{transform:rotate(8deg) translateY(-5px)}
+.hero-card:hover .hero-float-4{transform:rotate(-8deg) translateY(-7px)}
+/* Badge */
+.hero-badge{
+  position:relative;z-index:2;
+  display:inline-flex;align-items:center;gap:.55rem;
+  border:1px solid rgba(107,42,16,.12);
+  background:rgba(107,42,16,.06);
+  color:var(--espresso);
+  font-size:.78rem;font-weight:600;letter-spacing:.04em;
+  padding:.45rem 1rem;border-radius:50px;
+  margin-bottom:1.6rem;backdrop-filter:blur(4px);
+}
+.ping-wrap{position:relative;display:flex;width:8px;height:8px}
+.ping-ring{position:absolute;inset:0;border-radius:50%;background:var(--gold);opacity:.75;animation:ping 1.4s cubic-bezier(0,0,.2,1) infinite}
+.ping-dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--gold);display:block}
+@keyframes ping{75%,100%{transform:scale(1.9);opacity:0}}
+/* Content */
+.hero-content{position:relative;z-index:2;padding:3rem 6%;max-width:860px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5.5vw,5.5rem);font-weight:700;color:var(--espresso);line-height:1.05;margin-bottom:1.4rem;letter-spacing:-.01em}
 .hero-h1 em{font-style:normal;color:var(--gold)}
-.hero-sub{font-size:1rem;color:#C4A882;line-height:1.7;max-width:420px;margin-bottom:2.5rem;font-weight:300}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-gold{background:var(--gold);color:#fff;padding:.9rem 2.2rem;border-radius:6px;font-weight:700;font-size:.92rem;letter-spacing:.04em;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
-.btn-gold:hover{background:#b07820;transform:translateY(-1px)}
-.btn-outline-white{border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:.9rem 2.2rem;border-radius:6px;font-weight:600;font-size:.92rem;transition:background .2s}
-.btn-outline-white:hover{background:rgba(255,255,255,.08)}
-.hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08)}
-.hero-stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff}
-.hero-stat-lbl{font-size:.72rem;color:#9A7A5A;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
-.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:#111}
-.hero-img-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:5.5rem;transition:transform .4s;overflow:hidden;position:relative}
-.hero-img-cell:nth-child(1){background:linear-gradient(135deg,#5C2010,#7A3820)}
-.hero-img-cell:nth-child(2){background:linear-gradient(135deg,#3A1208,#5C2418)}
-.hero-img-cell:nth-child(3){background:linear-gradient(135deg,#6B2A14,#8A3C24)}
-.hero-img-cell:nth-child(4){background:linear-gradient(135deg,#2A0E06,#4A1E10)}
-.hero-img-cell:hover{transform:scale(1.05)}
-.hero-img-cell .hero-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.72rem;font-weight:600;padding:.8rem .8rem .6rem;letter-spacing:.05em;text-transform:uppercase}
+.hero-h1 .hero-h1-muted{color:rgba(107,42,16,.65)}
+.hero-sub{font-size:1.05rem;color:var(--gray);line-height:1.75;max-width:560px;margin-bottom:2.5rem;font-weight:300}
+/* CTA button — rounded pill with arrow */
+.btn-cta{
+  display:inline-flex;align-items:center;gap:.65rem;
+  height:56px;padding:0 2.8rem;border-radius:50px;
+  background:var(--espresso);color:#fff;
+  font-size:.95rem;font-weight:700;letter-spacing:.04em;
+  transition:background .25s,transform .2s,box-shadow .25s;
+  box-shadow:0 4px 20px rgba(107,42,16,.25);
+  position:relative;overflow:hidden;
+}
+.btn-cta::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .2s}
+.btn-cta:hover{background:#3A1208;transform:scale(1.04);box-shadow:0 8px 32px rgba(107,42,16,.35)}
+.btn-cta:active{transform:scale(.97)}
+.btn-cta:hover .btn-arrow{transform:translateX(4px)}
+.btn-arrow{transition:transform .25s;font-size:1.1rem;line-height:1}
+/* Stats */
+.hero-stats{display:flex;gap:3rem;margin-top:2.8rem;padding-top:2rem;border-top:1px solid var(--border);position:relative;z-index:2}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso)}
+.hero-stat-lbl{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
+/* Outline secondary button */
+.btn-outline-white{border:1.5px solid var(--border);color:var(--espresso);padding:.75rem 1.8rem;border-radius:50px;font-weight:600;font-size:.88rem;transition:background .2s,border-color .2s}
+.btn-outline-white:hover{background:var(--cream);border-color:var(--gold)}
 
 /* ─── CATEGORY STRIP ──────────────────────────────────────────────────────── */
 .section{padding:60px 4%}
@@ -310,6 +402,26 @@ footer{background:#220A02;color:#9A7A5A;padding:60px 4% 30px}
       <input type="text" placeholder="Search for bags, wallets, accessories…"/>
     </div>
     <div class="header-icons">
+      <!-- Auth: shown when logged OUT -->
+      <div class="auth-btns" id="authBtns">
+        <button class="btn-signin" onclick="openAuth('login')">Sign In</button>
+        <button class="btn-signup" onclick="openAuth('signup')">Sign Up</button>
+      </div>
+      <!-- User pill: shown when logged IN -->
+      <div class="user-pill" id="userPill" style="display:none" onclick="toggleUserDropdown()">
+        <div class="user-avatar" id="userAvatar">A</div>
+        <span class="user-name-pill" id="userNamePill">Account</span>
+        <span style="font-size:.7rem;color:var(--gray)">▾</span>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-dd-header">
+            <div class="user-dd-name" id="ddName">—</div>
+            <div class="user-dd-email" id="ddEmail">—</div>
+          </div>
+          <button class="user-dd-item" onclick="closeUserDropdown()">🛍 My Orders</button>
+          <button class="user-dd-item" onclick="closeUserDropdown()">❤️ Wishlist</button>
+          <button class="user-dd-item danger" onclick="handleLogout()">↩ Sign Out</button>
+        </div>
+      </div>
       <button class="hicon" onclick="toggleWishlist()">
         <span class="emoji">🤍</span>Wishlist
         <span class="badge-dot" id="wishCount" style="display:none">0</span>
@@ -335,26 +447,54 @@ footer{background:#220A02;color:#9A7A5A;padding:60px 4% 30px}
 </header>
 
 <!-- ─── HERO ──────────────────────────────────────────────────────────────── -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">✦ Summer Collection 2026</div>
-    <h1 class="hero-h1">Carry the Art of<br/><em>Fine Leather</em><br/>Craftsmanship</h1>
-    <p class="hero-sub">Each bag is hand-stitched by master artisans using full-grain leather. Built for a lifetime. Designed to turn heads.</p>
-    <div class="hero-btns">
-      <a href="#products" class="btn-gold">Shop Now →</a>
-      <a href="#products" class="btn-outline-white">View Collection</a>
+<section class="hero-section">
+  <div class="hero-card" id="heroCard">
+
+    <!-- Dithering canvas background -->
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+
+    <!-- Floating bag decorations -->
+    <div class="hero-float hero-float-1">🎒</div>
+    <div class="hero-float hero-float-2">👜</div>
+    <div class="hero-float hero-float-3">💼</div>
+    <div class="hero-float hero-float-4">🧳</div>
+
+    <!-- Main content -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="ping-wrap">
+          <span class="ping-ring"></span>
+          <span class="ping-dot"></span>
+        </span>
+        Summer Collection 2026
+      </div>
+
+      <h1 class="hero-h1">
+        Carry the Art of<br/>
+        <em>Fine Leather</em><br/>
+        <span class="hero-h1-muted">Craftsmanship.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Each bag is hand-stitched by master artisans using full-grain leather.
+        Built for a lifetime. Designed to turn heads.
+      </p>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+        <a href="#products" class="btn-cta">
+          Shop the Collection
+          <span class="btn-arrow">→</span>
+        </a>
+        <a href="#products" class="btn-outline-white">View Lookbook</a>
+      </div>
+
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">10K+</div><div class="hero-stat-lbl">Happy Customers</div></div>
+        <div><div class="hero-stat-num">100%</div><div class="hero-stat-lbl">Genuine Leather</div></div>
+        <div><div class="hero-stat-num">4.9★</div><div class="hero-stat-lbl">Avg. Rating</div></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div><div class="hero-stat-num">10K+</div><div class="hero-stat-lbl">Happy Customers</div></div>
-      <div><div class="hero-stat-num">100%</div><div class="hero-stat-lbl">Genuine Leather</div></div>
-      <div><div class="hero-stat-num">4.9★</div><div class="hero-stat-lbl">Avg. Rating</div></div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-img-cell"><span>🎒</span><div class="hero-label">Nomad Backpack</div></div>
-    <div class="hero-img-cell"><span>👜</span><div class="hero-label">Classic Tote</div></div>
-    <div class="hero-img-cell"><span>💼</span><div class="hero-label">Executive Brief</div></div>
-    <div class="hero-img-cell"><span>🧳</span><div class="hero-label">Vintage Duffel</div></div>
+
   </div>
 </section>
 
@@ -479,6 +619,69 @@ footer{background:#220A02;color:#9A7A5A;padding:60px 4% 30px}
   </div>
 </footer>
 
+<!-- ─── AUTH MODALS ───────────────────────────────────────────────────────── -->
+<!-- Login Modal -->
+<div class="auth-modal-bg" id="loginModal">
+  <div class="auth-modal">
+    <div class="auth-modal-head">
+      <div class="auth-modal-logo">Leather<em>Craft</em></div>
+      <button class="auth-modal-close" onclick="closeAuth()">✕</button>
+    </div>
+    <div class="auth-modal-body">
+      <h2>Welcome back</h2>
+      <p>Sign in to your account to continue shopping.</p>
+      <form onsubmit="handleLogin(event)">
+        <div class="auth-field">
+          <label>Email address</label>
+          <input type="email" id="loginEmail" placeholder="you@example.com" required autocomplete="email"/>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Your password" required autocomplete="current-password"/>
+        </div>
+        <div class="auth-err" id="loginErr"></div>
+        <button type="submit" class="auth-submit" id="loginBtn">Sign In</button>
+      </form>
+      <div class="auth-switch">
+        Don't have an account? <a onclick="openAuth('signup')">Create one →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="auth-modal-bg" id="signupModal">
+  <div class="auth-modal">
+    <div class="auth-modal-head">
+      <div class="auth-modal-logo">Leather<em>Craft</em></div>
+      <button class="auth-modal-close" onclick="closeAuth()">✕</button>
+    </div>
+    <div class="auth-modal-body">
+      <h2>Create account</h2>
+      <p>Join 10,000+ leather enthusiasts. Get early access & exclusive offers.</p>
+      <form onsubmit="handleSignup(event)">
+        <div class="auth-field">
+          <label>Full name</label>
+          <input type="text" id="signupName" placeholder="Arjun Mehta" required autocomplete="name"/>
+        </div>
+        <div class="auth-field">
+          <label>Email address</label>
+          <input type="email" id="signupEmail" placeholder="you@example.com" required autocomplete="email"/>
+        </div>
+        <div class="auth-field">
+          <label>Password <span style="font-weight:400;color:var(--gray)">(min. 6 characters)</span></label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required autocomplete="new-password"/>
+        </div>
+        <div class="auth-err" id="signupErr"></div>
+        <button type="submit" class="auth-submit" id="signupBtn">Create Account</button>
+      </form>
+      <div class="auth-switch">
+        Already have an account? <a onclick="openAuth('login')">Sign in →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ─── OVERLAY & CART DRAWER ─────────────────────────────────────────────── -->
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 <div class="cart-drawer" id="cartDrawer">
@@ -532,6 +735,85 @@ footer{background:#220A02;color:#9A7A5A;padding:60px 4% 30px}
 
 <script>
 const API = (location.protocol==='file:'||!location.hostname)?'http://localhost:3000/api':'/api';
+
+/* ── Hero Dithering Canvas ─────────────────────────────────────────────────── */
+(function() {
+  const card   = document.getElementById('heroCard');
+  const canvas = document.getElementById('heroCanvas');
+  if (!card || !canvas) return;
+
+  // 4×4 Bayer ordered-dithering matrix (normalised to 0–1)
+  const BAYER = [
+    [ 0/16,  8/16,  2/16, 10/16],
+    [12/16,  4/16, 14/16,  6/16],
+    [ 3/16, 11/16,  1/16,  9/16],
+    [15/16,  7/16, 13/16,  5/16]
+  ];
+
+  // Amber/mahogany accent matching the logo palette
+  const CR = 200, CG = 112, CB = 42;   // #C8702A
+
+  let hovered = false;
+  let time    = 0;
+  let raf;
+
+  card.addEventListener('mouseenter', () => { hovered = true; });
+  card.addEventListener('mouseleave', () => { hovered = false; });
+
+  function resize() {
+    canvas.width  = card.offsetWidth;
+    canvas.height = card.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function render() {
+    const W = canvas.width;
+    const H = canvas.height;
+    const ctx = canvas.getContext('2d');
+    const speed = hovered ? 0.022 : 0.007;
+    time += speed;
+
+    const PIXEL = 10;                          // dither block size in px
+    const cols  = Math.ceil(W / PIXEL);
+    const rows  = Math.ceil(H / PIXEL);
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const nx = c / cols;
+        const ny = r / rows;
+
+        // Warp distortion — two sine waves offset by time
+        const wx = Math.sin(ny * 5.0 + time * 1.8) * 0.18;
+        const wy = Math.cos(nx * 4.5 - time * 1.3) * 0.18;
+
+        // Intensity: radial falloff + warp noise
+        const dx   = (nx + wx) - 0.5;
+        const dy   = (ny + wy) - 0.5;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const wave = (Math.sin((nx + wx) * 9 + time * 2) +
+                      Math.cos((ny + wy) * 9 - time * 1.5)) * 0.25 + 0.5;
+        const intensity = wave * Math.max(0, 1 - dist * 1.6);
+
+        // Ordered dither threshold from Bayer matrix
+        const threshold = BAYER[r % 4][c % 4];
+
+        if (intensity > threshold) {
+          // Vary alpha slightly for depth
+          const alpha = 0.3 + (intensity - threshold) * 0.5;
+          ctx.fillStyle = `rgba(${CR},${CG},${CB},${alpha.toFixed(2)})`;
+          ctx.fillRect(c * PIXEL, r * PIXEL, PIXEL, PIXEL);
+        }
+      }
+    }
+
+    raf = requestAnimationFrame(render);
+  }
+
+  render();
+})();
 
 /* ── Data ──────────────────────────────────────────────────────────────────── */
 const products = [
@@ -801,7 +1083,139 @@ function showToast(msg){
   clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
+/* ── Auth ──────────────────────────────────────────────────────────────────── */
+let currentUser = null;
+
+function loadSession() {
+  try { currentUser = JSON.parse(localStorage.getItem('lc_user')) || null; } catch { currentUser = null; }
+  updateAuthUI();
+}
+
+function saveSession(user) {
+  currentUser = user;
+  localStorage.setItem('lc_user', JSON.stringify(user));
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const loggedIn = !!currentUser;
+  document.getElementById('authBtns').style.display  = loggedIn ? 'none' : 'flex';
+  document.getElementById('userPill').style.display  = loggedIn ? 'flex' : 'none';
+  if (loggedIn) {
+    const initials = currentUser.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+    document.getElementById('userAvatar').textContent   = initials;
+    document.getElementById('userNamePill').textContent = currentUser.name.split(' ')[0];
+    document.getElementById('ddName').textContent       = currentUser.name;
+    document.getElementById('ddEmail').textContent      = currentUser.email;
+  }
+}
+
+function openAuth(mode) {
+  closeAuth();
+  const id = mode === 'login' ? 'loginModal' : 'signupModal';
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // focus first input
+  setTimeout(() => {
+    const inp = document.querySelector(`#${id} input`);
+    if (inp) inp.focus();
+  }, 300);
+}
+
+function closeAuth() {
+  document.getElementById('loginModal').classList.remove('open');
+  document.getElementById('signupModal').classList.remove('open');
+  document.body.style.overflow = '';
+  // clear errors
+  ['loginErr','signupErr'].forEach(id => {
+    const el = document.getElementById(id);
+    el.textContent = ''; el.classList.remove('show');
+  });
+}
+
+function showAuthErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const btn   = document.getElementById('loginBtn');
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  btn.textContent = 'Signing in…'; btn.disabled = true;
+  try {
+    const res  = await fetch(API + '/auth/login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) { showAuthErr('loginErr', data.error); return; }
+    saveSession(data.user);
+    closeAuth();
+    showToast(`👋 Welcome back, ${data.user.name.split(' ')[0]}!`);
+  } catch {
+    showAuthErr('loginErr', 'Something went wrong. Please try again.');
+  } finally {
+    btn.textContent = 'Sign In'; btn.disabled = false;
+  }
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  const btn      = document.getElementById('signupBtn');
+  const name     = document.getElementById('signupName').value.trim();
+  const email    = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  btn.textContent = 'Creating account…'; btn.disabled = true;
+  try {
+    const res  = await fetch(API + '/auth/signup', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) { showAuthErr('signupErr', data.error); return; }
+    saveSession(data.user);
+    closeAuth();
+    showToast(`🎉 Welcome to LeatherCraft, ${data.user.name.split(' ')[0]}!`);
+  } catch {
+    showAuthErr('signupErr', 'Something went wrong. Please try again.');
+  } finally {
+    btn.textContent = 'Create Account'; btn.disabled = false;
+  }
+}
+
+function handleLogout() {
+  currentUser = null;
+  localStorage.removeItem('lc_user');
+  updateAuthUI();
+  closeUserDropdown();
+  showToast('👋 Signed out successfully.');
+}
+
+function toggleUserDropdown() {
+  document.getElementById('userPill').classList.toggle('open');
+}
+function closeUserDropdown() {
+  document.getElementById('userPill').classList.remove('open');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+  const pill = document.getElementById('userPill');
+  if (pill && !pill.contains(e.target)) pill.classList.remove('open');
+});
+
+// Close auth modal on backdrop click
+document.getElementById('loginModal').addEventListener('click', e => { if (e.target.id==='loginModal') closeAuth(); });
+document.getElementById('signupModal').addEventListener('click', e => { if (e.target.id==='signupModal') closeAuth(); });
+
+// Close on Escape
+document.addEventListener('keydown', e => { if (e.key==='Escape') { closeAuth(); closeUserDropdown(); } });
+
 /* ── Init ──────────────────────────────────────────────────────────────────── */
+loadSession();
 renderCats();
 renderFilterChips();
 renderGrid();

@@ -1,7 +1,14 @@
-const express = require('express');
+const express  = require('express');
 const { Pool } = require('pg');
-const cors = require('cors');
-const path = require('path');
+const cors     = require('cors');
+const path     = require('path');
+const crypto   = require('crypto');
+
+function hashPassword(password, salt) {
+  return crypto.createHmac('sha256', salt).update(password).digest('hex');
+}
+function genSalt() { return crypto.randomBytes(24).toString('hex'); }
+function genToken() { return crypto.randomBytes(32).toString('hex'); }
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -81,6 +88,15 @@ async function initDB(retries = 10, delay = 5000) {
       name       TEXT NOT NULL,
       price      NUMERIC NOT NULL,
       qty        INTEGER NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS accounts (
+      id           SERIAL PRIMARY KEY,
+      name         TEXT NOT NULL,
+      email        TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      salt         TEXT NOT NULL,
+      created_at   TIMESTAMPTZ DEFAULT NOW()
     );
   `);
   console.log('✅ Database initialised');
@@ -170,6 +186,53 @@ app.get('/api/orders', async (req, res) => {
 app.get('/api/users', async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM users ORDER BY created_at DESC');
   res.json(rows);
+});
+
+// POST /api/auth/signup
+app.post('/api/auth/signup', async (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'Name, email and password are required.' });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Valid email required.' });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters.' });
+  }
+  const salt = genSalt();
+  const hash = hashPassword(password, salt);
+  try {
+    const { rows: [account] } = await pool.query(
+      `INSERT INTO accounts (name, email, password_hash, salt)
+       VALUES ($1, $2, $3, $4) RETURNING id, name, email, created_at`,
+      [name.trim(), email.toLowerCase().trim(), hash, salt]
+    );
+    res.json({ message: 'Account created!', user: { id: account.id, name: account.name, email: account.email } });
+  } catch {
+    res.status(409).json({ error: 'An account with this email already exists.' });
+  }
+});
+
+// POST /api/auth/login
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required.' });
+  }
+  const { rows } = await pool.query(
+    'SELECT * FROM accounts WHERE email = $1',
+    [email.toLowerCase().trim()]
+  );
+  const account = rows[0];
+  if (!account) {
+    return res.status(401).json({ error: 'No account found with this email.' });
+  }
+  const hash = hashPassword(password, account.salt);
+  if (hash !== account.password_hash) {
+    return res.status(401).json({ error: 'Incorrect password.' });
+  }
+  res.json({ message: 'Logged in!', user: { id: account.id, name: account.name, email: account.email } });
 });
 
 // DELETE /api/admin/reset — wipe all data and reset ID sequences
