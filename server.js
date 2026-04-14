@@ -172,6 +172,14 @@ app.get('/api/users', async (req, res) => {
   res.json(rows);
 });
 
+// DELETE /api/admin/reset — wipe all data and reset ID sequences
+app.delete('/api/admin/reset', async (req, res) => {
+  await pool.query(`
+    TRUNCATE order_items, orders, users, subscribers RESTART IDENTITY CASCADE;
+  `);
+  res.json({ message: 'All data cleared.' });
+});
+
 // ── Start ─────────────────────────────────────────────────────────────────────
 initDB()
   .then(() => {

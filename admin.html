@@ -362,6 +362,12 @@
       ]);
       if (!ordersRes.ok || !usersRes.ok || !subsRes.ok) throw new Error('API error');
       [allOrders, allUsers, allSubs] = await Promise.all([ordersRes.json(), usersRes.json(), subsRes.json()]);
+      // PostgreSQL returns NUMERIC fields as strings — cast them to numbers
+      allOrders = allOrders.map(o => ({
+        ...o,
+        total: parseFloat(o.total),
+        items: (o.items || []).map(i => ({ ...i, price: parseFloat(i.price) }))
+      }));
       document.getElementById('apiStatus').textContent = '● Online';
       document.getElementById('apiStatus').className = 'api-status online';
       renderAll();
