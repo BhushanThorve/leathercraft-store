@@ -1,737 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeatherCraft — Premium Leather Bags</title>
-  <style>
-    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --brown:   #5c3d2e;
-      --dark:    #2b1d12;
-      --cream:   #f5efe6;
-      --accent:  #c4813a;
-      --light:   #fdf8f2;
-      --gray:    #6b6b6b;
-      --border:  #e0d5c9;
-      --shadow:  rgba(44,24,10,.12);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--light); color: var(--dark); }
-    a { text-decoration: none; color: inherit; }
-    img { display: block; width: 100%; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LeatherCraft — Premium Leather Bags</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET ───────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --espresso:#6B2A10;--brown:#7A3A1A;--gold:#C8702A;--gold-lt:#E8943A;
+  --cream:#FBF3E3;--warm-white:#FFF9F2;--border:#EADECE;
+  --text:#3A1A08;--gray:#7A6050;--gray-lt:#F5EDE0;
+  --green:#2D7A4F;--red:#C0392B;--shadow:rgba(80,30,10,.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--warm-white);color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{display:block;width:100%}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
 
-    /* ─── Header ────────────────────────────────────────────────────────────── */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--dark);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      height: 64px;
-      box-shadow: 0 2px 12px var(--shadow);
-    }
-    .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: .04em; color: #fff; }
-    .logo span { color: var(--accent); }
-    nav { display: flex; gap: 2rem; }
-    nav a { color: #ccc; font-size: .95rem; transition: color .2s; }
-    nav a:hover { color: var(--accent); }
-    .header-right { display: flex; align-items: center; gap: 1.2rem; }
-    .cart-btn {
-      position: relative; background: var(--accent); color: #fff;
-      border-radius: 50px; padding: .45rem 1.1rem;
-      font-size: .9rem; font-weight: 600; display: flex; align-items: center; gap: .5rem;
-      transition: background .2s;
-    }
-    .cart-btn:hover { background: #b06d28; }
-    .cart-count {
-      background: #fff; color: var(--accent);
-      border-radius: 50%; width: 20px; height: 20px;
-      font-size: .75rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
+/* ─── ANNOUNCEMENT BAR ────────────────────────────────────────────────────── */
+.announce-bar{background:var(--espresso);color:#fff;font-size:.78rem;letter-spacing:.05em;height:36px;display:flex;align-items:center;overflow:hidden;position:relative}
+.announce-track{display:flex;gap:80px;white-space:nowrap;animation:marquee 28s linear infinite}
+.announce-track span{display:flex;align-items:center;gap:.5rem}
+.announce-track span::before{content:'✦';color:var(--gold);font-size:.7rem}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-    /* ─── Hero ──────────────────────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(135deg, var(--dark) 0%, #3d2414 60%, #5c3d2e 100%);
-      color: #fff; padding: 90px 5% 80px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
-    }
-    .hero-text h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.2; margin-bottom: 1.2rem; }
-    .hero-text h1 span { color: var(--accent); }
-    .hero-text p { color: #c9b8a8; font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; max-width: 440px; }
-    .btn-primary {
-      display: inline-block; background: var(--accent); color: #fff;
-      padding: .85rem 2.2rem; border-radius: 50px; font-weight: 700; font-size: 1rem;
-      transition: background .2s, transform .15s;
-    }
-    .btn-primary:hover { background: #b06d28; transform: translateY(-2px); }
-    .hero-image-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-    }
-    .hero-img-card {
-      border-radius: 12px; overflow: hidden;
-      aspect-ratio: 3/4; background: var(--brown);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 4rem; color: rgba(255,255,255,.15);
-    }
-    .hero-img-card:nth-child(1) { margin-top: 30px; }
-    .hero-img-card:nth-child(4) { margin-top: -30px; }
-    .hero-img-card img { object-fit: cover; width: 100%; height: 100%; }
+/* ─── HEADER ──────────────────────────────────────────────────────────────── */
+.site-header{position:sticky;top:0;z-index:200;background:#fff;box-shadow:0 1px 0 var(--border)}
+.header-main{display:flex;align-items:center;justify-content:space-between;padding:0 4%;height:64px;gap:1.5rem}
+.logo{display:inline-flex;align-items:baseline;gap:.05em;white-space:nowrap;line-height:1}
+.logo-l{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:var(--espresso);letter-spacing:.01em;text-transform:uppercase}
+.logo-c{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--gold);font-style:italic;letter-spacing:-.01em}
+.header-search{flex:1;max-width:480px;position:relative}
+.header-search input{width:100%;padding:.6rem 1rem .6rem 2.8rem;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;font-family:'Inter',sans-serif;background:var(--cream);outline:none;transition:border-color .2s}
+.header-search input:focus{border-color:var(--gold)}
+.header-search .s-icon{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--gray);font-size:1rem}
+.header-icons{display:flex;align-items:center;gap:.3rem}
+.hicon{display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.4rem .7rem;border-radius:8px;transition:background .15s;font-size:.67rem;font-weight:600;color:var(--gray);position:relative}
+.hicon:hover{background:var(--gray-lt);color:var(--espresso)}
+.hicon .emoji{font-size:1.25rem;line-height:1}
+.badge-dot{position:absolute;top:4px;right:6px;width:16px;height:16px;background:var(--gold);color:#fff;border-radius:50%;font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+/* ─── NAV BAR ─────────────────────────────────────────────────────────────── */
+.nav-bar{border-top:1px solid var(--border);background:#fff}
+.nav-inner{display:flex;align-items:center;justify-content:center;gap:0;padding:0 4%}
+.nav-item{position:relative;padding:.75rem 1.1rem;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text);cursor:pointer;transition:color .15s;white-space:nowrap}
+.nav-item:hover{color:var(--gold)}
+.nav-item.sale{color:var(--red)}
+.nav-item::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--gold);transition:left .2s,right .2s}
+.nav-item:hover::after{left:1.1rem;right:1.1rem}
 
-    /* ─── Section Heading ───────────────────────────────────────────────────── */
-    .section { padding: 70px 5%; }
-    .section-header { text-align: center; margin-bottom: 3rem; }
-    .section-header h2 { font-size: 2rem; color: var(--dark); margin-bottom: .5rem; }
-    .section-header p { color: var(--gray); font-size: 1.05rem; }
-    .divider { width: 50px; height: 3px; background: var(--accent); margin: .8rem auto 0; border-radius: 4px; }
+/* ─── HERO ────────────────────────────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;overflow:hidden}
+.hero-left{background:linear-gradient(150deg,#3A1208 0%,#5C2010 50%,#7A3018 100%);padding:5% 6%;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero-left::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8922A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,146,42,.15);border:1px solid rgba(200,146,42,.3);color:var(--gold-lt);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.4rem .9rem;border-radius:50px;margin-bottom:1.8rem;width:fit-content}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.5vw,4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1.2rem}
+.hero-h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:1rem;color:#C4A882;line-height:1.7;max-width:420px;margin-bottom:2.5rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:#fff;padding:.9rem 2.2rem;border-radius:6px;font-weight:700;font-size:.92rem;letter-spacing:.04em;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-gold:hover{background:#b07820;transform:translateY(-1px)}
+.btn-outline-white{border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:.9rem 2.2rem;border-radius:6px;font-weight:600;font-size:.92rem;transition:background .2s}
+.btn-outline-white:hover{background:rgba(255,255,255,.08)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08)}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff}
+.hero-stat-lbl{font-size:.72rem;color:#9A7A5A;text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
+.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:#111}
+.hero-img-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:5.5rem;transition:transform .4s;overflow:hidden;position:relative}
+.hero-img-cell:nth-child(1){background:linear-gradient(135deg,#5C2010,#7A3820)}
+.hero-img-cell:nth-child(2){background:linear-gradient(135deg,#3A1208,#5C2418)}
+.hero-img-cell:nth-child(3){background:linear-gradient(135deg,#6B2A14,#8A3C24)}
+.hero-img-cell:nth-child(4){background:linear-gradient(135deg,#2A0E06,#4A1E10)}
+.hero-img-cell:hover{transform:scale(1.05)}
+.hero-img-cell .hero-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.72rem;font-weight:600;padding:.8rem .8rem .6rem;letter-spacing:.05em;text-transform:uppercase}
 
-    /* ─── Product Grid ──────────────────────────────────────────────────────── */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-    .product-card {
-      background: #fff; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 2px 14px var(--shadow); transition: transform .25s, box-shadow .25s;
-    }
-    .product-card:hover { transform: translateY(-6px); box-shadow: 0 8px 28px var(--shadow); }
-    .product-img {
-      aspect-ratio: 4/3; background: var(--cream);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 5rem; position: relative; overflow: hidden;
-    }
-    .badge {
-      position: absolute; top: 12px; left: 12px;
-      background: var(--accent); color: #fff; font-size: .72rem; font-weight: 700;
-      padding: .25rem .65rem; border-radius: 50px; text-transform: uppercase;
-    }
-    .product-info { padding: 1.2rem; }
-    .product-category { font-size: .78rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-    .product-name { font-size: 1.1rem; font-weight: 700; margin: .3rem 0 .5rem; color: var(--dark); }
-    .product-desc { font-size: .87rem; color: var(--gray); line-height: 1.6; margin-bottom: 1rem; }
-    .product-footer { display: flex; align-items: center; justify-content: space-between; }
-    .price { font-size: 1.25rem; font-weight: 700; color: var(--brown); }
-    .price-old { font-size: .85rem; color: #aaa; text-decoration: line-through; margin-left: .3rem; }
-    .add-cart-btn {
-      background: var(--dark); color: #fff; border-radius: 50px;
-      padding: .5rem 1.1rem; font-size: .85rem; font-weight: 600;
-      transition: background .2s, transform .15s;
-      display: flex; align-items: center; gap: .4rem;
-    }
-    .add-cart-btn:hover { background: var(--brown); transform: scale(1.05); }
+/* ─── CATEGORY STRIP ──────────────────────────────────────────────────────── */
+.section{padding:60px 4%}
+.section-sm{padding:40px 4%}
+.sec-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--espresso);margin-bottom:.4rem}
+.sec-sub{font-size:.9rem;color:var(--gray);margin-bottom:2.2rem}
+.sec-header-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem}
+.view-all{font-size:.82rem;font-weight:700;color:var(--gold);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:.3rem;transition:gap .2s}
+.view-all:hover{gap:.6rem}
+.cat-strip{display:flex;gap:1.5rem;overflow-x:auto;padding-bottom:.5rem;scrollbar-width:none}
+.cat-strip::-webkit-scrollbar{display:none}
+.cat-pill{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:.75rem;cursor:pointer}
+.cat-circle{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;transition:transform .2s,box-shadow .2s;border:2px solid transparent;position:relative;overflow:hidden}
+.cat-pill:hover .cat-circle{transform:translateY(-4px);box-shadow:0 10px 30px var(--shadow);border-color:var(--gold)}
+.cat-circle:nth-child(1){background:linear-gradient(135deg,#4A2A15,#7A4525)}
+.cat-label{font-size:.75rem;font-weight:600;color:var(--text);text-transform:capitalize;letter-spacing:.02em}
+.cats .cat-circle:nth-of-type(1){background:linear-gradient(135deg,#8B4513,#D2691E)}
 
-    /* ─── Features Strip ────────────────────────────────────────────────────── */
-    .features { background: var(--cream); }
-    .features-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;
-    }
-    .feature-card { text-align: center; padding: 1rem; }
-    .feature-icon { font-size: 2.5rem; margin-bottom: .8rem; }
-    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; color: var(--dark); }
-    .feature-card p { font-size: .87rem; color: var(--gray); line-height: 1.5; }
+/* ─── PRODUCTS ────────────────────────────────────────────────────────────── */
+.products-bg{background:var(--warm-white)}
+.filter-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.8rem}
+.filter-chips{display:flex;gap:.5rem;flex-wrap:wrap}
+.chip{padding:.35rem .9rem;border-radius:50px;font-size:.78rem;font-weight:600;border:1.5px solid var(--border);color:var(--gray);cursor:pointer;transition:all .15s}
+.chip:hover,.chip.active{background:var(--espresso);color:#fff;border-color:var(--espresso)}
+.sort-select{padding:.4rem .9rem;border:1.5px solid var(--border);border-radius:8px;font-size:.82rem;font-family:'Inter',sans-serif;background:#fff;outline:none;cursor:pointer;color:var(--text)}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+/* ─── PRODUCT CARD ────────────────────────────────────────────────────────── */
+.pcard{border-radius:12px;overflow:hidden;background:#fff;transition:box-shadow .25s;position:relative;cursor:pointer}
+.pcard:hover{box-shadow:0 8px 32px var(--shadow)}
+.pcard-img{aspect-ratio:3/4;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:5rem;transition:transform .4s}
+.pcard:hover .pcard-img{transform:scale(1.04)}
+.pcard-img-bg1{background:linear-gradient(145deg,#FDF0E0,#F0D8BC)}
+.pcard-img-bg2{background:linear-gradient(145deg,#EDE0D4,#D9C4A8)}
+.pcard-img-bg3{background:linear-gradient(145deg,#F5E8D4,#E8CCAA)}
+.pcard-img-bg4{background:linear-gradient(145deg,#E8DDD0,#D4C0A8)}
+.pcard-img-bg5{background:linear-gradient(145deg,#F0E4D4,#DCC8AC)}
+.pcard-img-bg6{background:linear-gradient(145deg,#EAE0D4,#D6C4AC)}
+.pcard-img-bg7{background:linear-gradient(145deg,#F5EAD8,#E8D0B0)}
+.pcard-img-bg8{background:linear-gradient(145deg,#ECE0D0,#D8C8B0)}
+.pcard-badge{position:absolute;top:10px;left:10px;padding:.22rem .65rem;border-radius:4px;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;z-index:2}
+.badge-new{background:var(--espresso);color:#fff}
+.badge-sale{background:#C0392B;color:#fff}
+.badge-hot{background:var(--gold);color:#fff}
+.pcard-wish{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 2px 8px var(--shadow);transition:transform .2s,background .2s;z-index:2}
+.pcard-wish:hover,.pcard-wish.wished{background:#ffe8e8;transform:scale(1.15)}
+.pcard-wish.wished .heart{color:#e02020}
+.pcard-atb{position:absolute;bottom:0;left:0;right:0;background:var(--espresso);color:#fff;text-align:center;padding:.75rem;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.pcard:hover .pcard-atb{transform:translateY(0)}
+.pcard-info{padding:1rem}
+.pcard-cat{font-size:.7rem;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:.2rem}
+.pcard-name{font-size:.92rem;font-weight:600;color:var(--espresso);margin-bottom:.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard-stars{display:flex;align-items:center;gap:.3rem;margin-bottom:.5rem}
+.stars-icons{color:#F5A623;font-size:.8rem;letter-spacing:-.05em}
+.stars-count{font-size:.72rem;color:var(--gray)}
+.pcard-price{display:flex;align-items:center;gap:.5rem}
+.price-now{font-size:1rem;font-weight:700;color:var(--espresso)}
+.price-mrp{font-size:.82rem;color:var(--gray);text-decoration:line-through}
+.price-off{font-size:.75rem;font-weight:700;color:var(--green)}
 
-    /* ─── Testimonials ──────────────────────────────────────────────────────── */
-    .testimonials { background: var(--dark); color: #fff; }
-    .testimonials .section-header h2 { color: #fff; }
-    .testimonials .section-header p { color: #c9b8a8; }
-    .testimonials .divider { background: var(--accent); }
-    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .testimonial-card {
-      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
-      border-radius: 14px; padding: 1.5rem;
-    }
-    .stars { color: #f5c842; font-size: 1rem; margin-bottom: .8rem; }
-    .testimonial-card p { color: #d4c4b8; font-size: .92rem; line-height: 1.7; margin-bottom: 1rem; }
-    .reviewer { display: flex; align-items: center; gap: .8rem; }
-    .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--brown); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-    .reviewer-name { font-weight: 600; font-size: .92rem; }
-    .reviewer-loc { font-size: .78rem; color: #9a8a7e; }
+/* ─── PROMO BANNER ────────────────────────────────────────────────────────── */
+.promo-banner{background:linear-gradient(120deg,#3A1208 0%,#5C2010 40%,#7A3422 100%);padding:70px 4%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3rem;overflow:hidden;position:relative}
+.promo-banner::after{content:'SALE';font-family:'Playfair Display',serif;font-size:20rem;font-weight:900;color:rgba(200,146,42,.04);position:absolute;right:-2rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none}
+.promo-tag{display:inline-flex;align-items:center;gap:.4rem;background:var(--gold);color:#fff;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:4px;margin-bottom:1.2rem}
+.promo-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:1rem}
+.promo-title span{color:var(--gold)}
+.promo-sub{color:#C4A882;font-size:.95rem;line-height:1.6;margin-bottom:2rem;font-weight:300}
+.promo-emoji-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.promo-ec{aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:4rem;transition:transform .2s}
+.promo-ec:hover{transform:scale(1.04)}
+.promo-ec:nth-child(1){background:rgba(255,255,255,.06);margin-top:20px}
+.promo-ec:nth-child(2){background:rgba(255,255,255,.04)}
+.promo-ec:nth-child(3){background:rgba(255,255,255,.04)}
+.promo-ec:nth-child(4){background:rgba(255,255,255,.06);margin-top:-20px}
 
-    /* ─── Newsletter ────────────────────────────────────────────────────────── */
-    .newsletter { background: var(--accent); color: #fff; text-align: center; padding: 60px 5%; }
-    .newsletter h2 { font-size: 1.8rem; margin-bottom: .6rem; }
-    .newsletter p { font-size: 1rem; opacity: .9; margin-bottom: 1.8rem; }
-    .newsletter-form { display: flex; max-width: 480px; margin: 0 auto; gap: .8rem; flex-wrap: wrap; justify-content: center; }
-    .newsletter-form input {
-      flex: 1; min-width: 220px; padding: .85rem 1.2rem; border-radius: 50px;
-      border: none; font-size: .95rem; outline: none;
-    }
-    .newsletter-form button {
-      background: var(--dark); color: #fff; padding: .85rem 1.8rem; border-radius: 50px;
-      font-weight: 700; font-size: .95rem; transition: background .2s;
-    }
-    .newsletter-form button:hover { background: #1a0e07; }
+/* ─── FEATURES ────────────────────────────────────────────────────────────── */
+.features-bar{background:var(--espresso);padding:28px 4%}
+.features-inner{display:flex;align-items:center;justify-content:space-around;gap:1rem;flex-wrap:wrap}
+.feat-item{display:flex;align-items:center;gap:.85rem;color:#fff}
+.feat-icon{font-size:1.6rem;flex-shrink:0}
+.feat-title{font-size:.82rem;font-weight:700;margin-bottom:.1rem}
+.feat-sub{font-size:.72rem;color:#9A7A5A;font-weight:400}
+.feat-divider{width:1px;height:40px;background:rgba(255,255,255,.1)}
 
-    /* ─── Footer ────────────────────────────────────────────────────────────── */
-    footer { background: #1a0e07; color: #c9b8a8; padding: 50px 5% 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
-    .footer-brand .logo { font-size: 1.3rem; margin-bottom: .8rem; }
-    .footer-brand p { font-size: .88rem; line-height: 1.7; max-width: 260px; }
-    .footer-col h4 { color: #fff; font-size: .95rem; margin-bottom: 1rem; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-    .footer-col ul li a { font-size: .87rem; color: #9a8a7e; transition: color .2s; }
-    .footer-col ul li a:hover { color: var(--accent); }
-    .footer-bottom { border-top: 1px solid #2e1e10; padding-top: 1.5rem; text-align: center; font-size: .82rem; color: #6b5a4e; }
+/* ─── TESTIMONIALS ────────────────────────────────────────────────────────── */
+.testi-bg{background:var(--cream)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testi-card{background:#fff;border-radius:16px;padding:1.8rem;border:1px solid var(--border)}
+.testi-stars{color:#F5A623;font-size:1rem;margin-bottom:1rem;letter-spacing:-.05em}
+.testi-text{font-size:.9rem;line-height:1.75;color:#4A3020;margin-bottom:1.2rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.tav{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:var(--cream)}
+.tav-name{font-size:.85rem;font-weight:700;color:var(--espresso)}
+.tav-loc{font-size:.72rem;color:var(--gray)}
 
-    /* ─── Cart Sidebar ──────────────────────────────────────────────────────── */
-    .cart-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200;
-      opacity: 0; pointer-events: none; transition: opacity .3s;
-    }
-    .cart-overlay.open { opacity: 1; pointer-events: all; }
-    .cart-sidebar {
-      position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw;
-      height: 100%; background: #fff; z-index: 201; display: flex; flex-direction: column;
-      transition: right .35s cubic-bezier(.4,0,.2,1);
-      box-shadow: -4px 0 30px var(--shadow);
-    }
-    .cart-sidebar.open { right: 0; }
-    .cart-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--border);
-    }
-    .cart-head h3 { font-size: 1.2rem; color: var(--dark); }
-    .close-cart { font-size: 1.6rem; color: var(--gray); transition: color .2s; line-height: 1; }
-    .close-cart:hover { color: var(--dark); }
-    .cart-items { flex: 1; overflow-y: auto; padding: 1.2rem 1.6rem; display: flex; flex-direction: column; gap: 1rem; }
-    .cart-empty { text-align: center; color: var(--gray); margin: auto; padding: 3rem 0; }
-    .cart-empty .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
-    .cart-item { display: flex; gap: 1rem; align-items: flex-start; }
-    .cart-item-img { width: 70px; height: 70px; border-radius: 10px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
-    .cart-item-details { flex: 1; }
-    .cart-item-name { font-weight: 600; font-size: .95rem; color: var(--dark); }
-    .cart-item-price { color: var(--brown); font-weight: 700; font-size: .95rem; margin: .2rem 0; }
-    .qty-controls { display: flex; align-items: center; gap: .5rem; margin-top: .4rem; }
-    .qty-btn { width: 26px; height: 26px; border-radius: 6px; background: var(--cream); color: var(--dark); font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .2s; }
-    .qty-btn:hover { background: var(--border); }
-    .qty-num { font-size: .9rem; font-weight: 600; min-width: 20px; text-align: center; }
-    .remove-item { color: #e05050; font-size: 1.2rem; margin-left: auto; }
-    .remove-item:hover { color: #c03030; }
-    .cart-footer { padding: 1.4rem 1.6rem; border-top: 1px solid var(--border); }
-    .cart-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--dark); }
-    .checkout-btn {
-      display: block; width: 100%; background: var(--dark); color: #fff;
-      padding: 1rem; border-radius: 50px; font-size: 1rem; font-weight: 700;
-      text-align: center; transition: background .2s;
-    }
-    .checkout-btn:hover { background: var(--brown); }
+/* ─── NEWSLETTER ──────────────────────────────────────────────────────────── */
+.newsletter-sec{background:linear-gradient(135deg,#3A1208,#5C2010);padding:70px 4%;text-align:center}
+.nl-icon{font-size:3rem;margin-bottom:1rem}
+.nl-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:.5rem}
+.nl-sub{font-size:.95rem;color:#C4A882;margin-bottom:2rem;font-weight:300}
+.nl-form{display:flex;max-width:460px;margin:0 auto;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.nl-form input{flex:1;min-width:220px;padding:.85rem 1.3rem;border-radius:8px;border:none;font-size:.92rem;font-family:'Inter',sans-serif;outline:none;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.12)}
+.nl-form input::placeholder{color:rgba(255,255,255,.35)}
+.nl-form input:focus{border-color:var(--gold);background:rgba(255,255,255,.12)}
+.nl-form button{background:var(--gold);color:#fff;padding:.85rem 1.8rem;border-radius:8px;font-weight:700;font-size:.88rem;letter-spacing:.05em;transition:background .2s}
+.nl-form button:hover{background:#b07820}
+.nl-trust{margin-top:1rem;font-size:.75rem;color:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;gap:.4rem}
 
-    /* ─── Toast ──────────────────────────────────────────────────────────────── */
-    .toast {
-      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
-      background: var(--dark); color: #fff; padding: .75rem 1.6rem;
-      border-radius: 50px; font-size: .9rem; font-weight: 600;
-      box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 300;
-      transition: transform .35s cubic-bezier(.4,0,.2,1); pointer-events: none;
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); }
+/* ─── FOOTER ──────────────────────────────────────────────────────────────── */
+footer{background:#220A02;color:#9A7A5A;padding:60px 4% 30px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.footer-brand .logo{color:#fff;font-size:1.4rem;margin-bottom:1rem}
+.footer-brand p{font-size:.83rem;line-height:1.7;max-width:240px;color:#6B5040}
+.footer-social{display:flex;gap:.8rem;margin-top:1.5rem}
+.social-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:background .2s}
+.social-btn:hover{background:rgba(200,146,42,.2)}
+.fcol h5{color:#E0CDB8;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.2rem}
+.fcol li{margin-bottom:.65rem}
+.fcol li a{font-size:.82rem;color:#6B5040;transition:color .15s}
+.fcol li a:hover{color:var(--gold)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.footer-bottom p{font-size:.75rem;color:#3A2518}
+.footer-payments{display:flex;gap:.5rem;align-items:center}
+.pay-badge{background:rgba(255,255,255,.05);border-radius:4px;padding:.25rem .6rem;font-size:.72rem;font-weight:600;color:#7A6050}
 
-    /* ─── Responsive ─────────────────────────────────────────────────────────── */
-    /* ─── Checkout Modal ─────────────────────────────────────────────────────── */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 300;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity .3s;
-      padding: 1rem;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: #fff; border-radius: 20px; width: 100%; max-width: 560px;
-      max-height: 90vh; display: flex; flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0,0,0,.3);
-      transform: translateY(30px); transition: transform .3s;
-    }
-    .modal-overlay.open .modal { transform: translateY(0); }
-    .modal-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .modal-head h3 { font-size: 1.2rem; color: var(--dark); }
-    .modal-body { padding: 1.4rem 1.6rem; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 1rem; }
-    .modal-footer { padding: 1.2rem 1.6rem; border-top: 1px solid var(--border); flex-shrink: 0; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: .4rem; }
-    .form-group label { font-size: .82rem; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: .04em; }
-    .form-group input {
-      padding: .7rem 1rem; border: 1.5px solid var(--border); border-radius: 10px;
-      font-size: .95rem; font-family: inherit; outline: none; transition: border-color .2s;
-    }
-    .form-group input:focus { border-color: var(--accent); }
-    .order-summary { background: var(--cream); border-radius: 12px; padding: 1rem 1.2rem; margin-top: .5rem; }
-    .order-summary h4 { font-size: .85rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .8rem; }
-    .summary-item { display: flex; justify-content: space-between; font-size: .9rem; color: var(--dark); padding: .3rem 0; }
-    .summary-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; color: var(--brown); border-top: 1px solid var(--border); margin-top: .6rem; padding-top: .6rem; }
+/* ─── CART DRAWER ─────────────────────────────────────────────────────────── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px)}
+.overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:-440px;width:440px;max-width:100vw;height:100%;background:#fff;z-index:301;display:flex;flex-direction:column;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 40px var(--shadow)}
+.cart-drawer.open{right:0}
+.cd-head{display:flex;align-items:center;justify-content:space-between;padding:1.3rem 1.6rem;border-bottom:1px solid var(--border)}
+.cd-head h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700}
+.cd-count{background:var(--espresso);color:#fff;border-radius:50px;font-size:.72rem;font-weight:700;padding:.15rem .55rem;margin-left:.5rem}
+.cd-close{font-size:1.5rem;color:var(--gray);transition:color .15s;line-height:1}
+.cd-close:hover{color:var(--espresso)}
+.cd-body{flex:1;overflow-y:auto;padding:1.2rem 1.6rem;display:flex;flex-direction:column;gap:.8rem}
+.cd-empty{text-align:center;margin:auto;padding:2rem}
+.cd-empty-icon{font-size:3.5rem;margin-bottom:1rem}
+.cd-empty p{color:var(--gray);font-size:.92rem}
+.cd-item{display:flex;gap:1rem;align-items:flex-start;padding:.8rem 0;border-bottom:1px solid var(--border)}
+.cd-item-img{width:72px;height:72px;border-radius:10px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
+.cd-item-info{flex:1}
+.cd-item-name{font-size:.88rem;font-weight:600;color:var(--espresso);margin-bottom:.2rem}
+.cd-item-price{font-size:.92rem;font-weight:700;color:var(--gold);margin-bottom:.4rem}
+.cd-qty{display:flex;align-items:center;gap:.5rem}
+.qbtn{width:28px;height:28px;border-radius:6px;background:var(--gray-lt);color:var(--espresso);font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.qbtn:hover{background:var(--border)}
+.qnum{font-size:.88rem;font-weight:600;min-width:20px;text-align:center}
+.cd-remove{color:#CCC;font-size:1.1rem;margin-left:auto;align-self:center;transition:color .15s}
+.cd-remove:hover{color:var(--red)}
+.cd-foot{padding:1.2rem 1.6rem;border-top:1px solid var(--border)}
+.cd-subtotal{display:flex;justify-content:space-between;font-size:.82rem;color:var(--gray);margin-bottom:.4rem}
+.cd-total{display:flex;justify-content:space-between;font-size:1.05rem;font-weight:700;color:var(--espresso);margin-bottom:1.2rem;padding-top:.6rem;border-top:1px solid var(--border)}
+.checkout-btn{display:block;width:100%;background:var(--espresso);color:#fff;padding:1rem;border-radius:8px;font-weight:700;font-size:.92rem;letter-spacing:.04em;text-align:center;transition:background .2s}
+.checkout-btn:hover{background:var(--brown)}
 
-    @media (max-width: 768px) {
-      nav { display: none; }
-      .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 5%; }
-      .hero-text p { margin: 0 auto 2rem; }
-      .hero-image-grid { max-width: 340px; margin: 0 auto; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .cart-sidebar { width: 100vw; }
-    }
-  </style>
+/* ─── CHECKOUT MODAL ──────────────────────────────────────────────────────── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:1rem;backdrop-filter:blur(3px)}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:580px;max-height:90vh;display:flex;flex-direction:column;transform:translateY(24px) scale(.98);transition:transform .3s;overflow:hidden}
+.modal-bg.open .modal{transform:none}
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.8rem;border-bottom:1px solid var(--border)}
+.mhead h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700}
+.mclose{font-size:1.5rem;color:var(--gray);line-height:1;transition:color .15s}
+.mclose:hover{color:var(--espresso)}
+.mbody{padding:1.6rem 1.8rem;overflow-y:auto;display:flex;flex-direction:column;gap:1rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fg label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray)}
+.fg input{padding:.72rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;color:var(--espresso)}
+.fg input:focus{border-color:var(--gold)}
+.order-box{background:var(--cream);border-radius:10px;padding:1rem 1.2rem}
+.order-box h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray);margin-bottom:.8rem}
+.ob-item{display:flex;justify-content:space-between;font-size:.85rem;color:var(--text);padding:.25rem 0}
+.ob-total{display:flex;justify-content:space-between;font-size:.95rem;font-weight:700;color:var(--espresso);border-top:1px solid var(--border);margin-top:.5rem;padding-top:.5rem}
+.mfoot{padding:1.2rem 1.8rem;border-top:1px solid var(--border)}
+.place-btn{width:100%;background:var(--espresso);color:#fff;padding:1rem;border-radius:8px;font-weight:700;font-size:.92rem;letter-spacing:.04em;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.place-btn:hover{background:var(--brown)}
+.place-btn:disabled{opacity:.6;pointer-events:none}
+
+/* ─── TOAST ───────────────────────────────────────────────────────────────── */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--espresso);color:#fff;padding:.75rem 1.6rem;border-radius:50px;font-size:.85rem;font-weight:600;box-shadow:0 4px 24px rgba(0,0,0,.25);z-index:500;transition:transform .35s cubic-bezier(.4,0,.2,1);pointer-events:none;display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media(max-width:1024px){.product-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .nav-bar{display:none}
+  .header-search{display:none}
+  .product-grid{grid-template-columns:repeat(2,1fr)}
+  .testi-grid{grid-template-columns:1fr}
+  .promo-banner{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .features-inner{gap:1.5rem;justify-content:flex-start}
+  .feat-divider{display:none}
+}
+@media(max-width:480px){
+  .product-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
+  .pcard-info{padding:.7rem}
+  .footer-top{grid-template-columns:1fr}
+  .cart-drawer{width:100vw}
+}
+</style>
 </head>
 <body>
 
-<!-- ─── HEADER ───────────────────────────────────────────────────────────────── -->
-<header>
-  <div class="logo">Leather<span>Craft</span></div>
-  <nav>
-    <a href="#products">Shop</a>
-    <a href="#features">Why Us</a>
-    <a href="#testimonials">Reviews</a>
-    <a href="#newsletter">Contact</a>
-  </nav>
-  <div class="header-right">
-    <button class="cart-btn" onclick="toggleCart()">
-      🛍 Cart <span class="cart-count" id="cartCount">0</span>
-    </button>
+<!-- ─── ANNOUNCEMENT BAR ──────────────────────────────────────────────────── -->
+<div class="announce-bar">
+  <div class="announce-track" id="announceTrack">
+    <span>Free Shipping on Orders Over ₹5,000</span>
+    <span>Handcrafted with Full-Grain Leather</span>
+    <span>Lifetime Guarantee on All Products</span>
+    <span>30-Day Hassle-Free Returns</span>
+    <span>New Arrivals: Summer Edit 2026</span>
+    <span>Free Shipping on Orders Over ₹5,000</span>
+    <span>Handcrafted with Full-Grain Leather</span>
+    <span>Lifetime Guarantee on All Products</span>
+    <span>30-Day Hassle-Free Returns</span>
+    <span>New Arrivals: Summer Edit 2026</span>
   </div>
+</div>
+
+<!-- ─── HEADER ────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-main">
+    <a href="/" class="logo"><span class="logo-l">Leather</span><span class="logo-c">Craft</span></a>
+    <div class="header-search">
+      <span class="s-icon">🔍</span>
+      <input type="text" placeholder="Search for bags, wallets, accessories…"/>
+    </div>
+    <div class="header-icons">
+      <button class="hicon" onclick="toggleWishlist()">
+        <span class="emoji">🤍</span>Wishlist
+        <span class="badge-dot" id="wishCount" style="display:none">0</span>
+      </button>
+      <button class="hicon" onclick="toggleCart()">
+        <span class="emoji">🛍</span>Bag
+        <span class="badge-dot" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <div class="nav-item" onclick="scrollToProducts('all')">New Arrivals</div>
+      <div class="nav-item" onclick="scrollToProducts('Backpack')">Backpacks</div>
+      <div class="nav-item" onclick="scrollToProducts('Tote')">Totes</div>
+      <div class="nav-item" onclick="scrollToProducts('Briefcase')">Briefcases</div>
+      <div class="nav-item" onclick="scrollToProducts('Crossbody')">Crossbody</div>
+      <div class="nav-item" onclick="scrollToProducts('Duffel')">Duffel Bags</div>
+      <div class="nav-item" onclick="scrollToProducts('Messenger')">Messengers</div>
+      <div class="nav-item sale" onclick="scrollToProducts('sale')">Sale 🔥</div>
+    </div>
+  </nav>
 </header>
 
-<!-- ─── HERO ──────────────────────────────────────────────────────────────────── -->
+<!-- ─── HERO ──────────────────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-text">
-    <h1>Handcrafted<br /><span>Leather Bags</span><br />for Every Journey</h1>
-    <p>Each bag is hand-stitched using full-grain leather sourced from sustainable tanneries. Built to last a lifetime, designed to turn heads.</p>
-    <a href="#products" class="btn-primary">Shop the Collection</a>
+  <div class="hero-left">
+    <div class="hero-tag">✦ Summer Collection 2026</div>
+    <h1 class="hero-h1">Carry the Art of<br/><em>Fine Leather</em><br/>Craftsmanship</h1>
+    <p class="hero-sub">Each bag is hand-stitched by master artisans using full-grain leather. Built for a lifetime. Designed to turn heads.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-gold">Shop Now →</a>
+      <a href="#products" class="btn-outline-white">View Collection</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num">10K+</div><div class="hero-stat-lbl">Happy Customers</div></div>
+      <div><div class="hero-stat-num">100%</div><div class="hero-stat-lbl">Genuine Leather</div></div>
+      <div><div class="hero-stat-num">4.9★</div><div class="hero-stat-lbl">Avg. Rating</div></div>
+    </div>
   </div>
-  <div class="hero-image-grid">
-    <div class="hero-img-card">🎒</div>
-    <div class="hero-img-card">👜</div>
-    <div class="hero-img-card">💼</div>
-    <div class="hero-img-card">🧳</div>
+  <div class="hero-right">
+    <div class="hero-img-cell"><span>🎒</span><div class="hero-label">Nomad Backpack</div></div>
+    <div class="hero-img-cell"><span>👜</span><div class="hero-label">Classic Tote</div></div>
+    <div class="hero-img-cell"><span>💼</span><div class="hero-label">Executive Brief</div></div>
+    <div class="hero-img-cell"><span>🧳</span><div class="hero-label">Vintage Duffel</div></div>
   </div>
 </section>
 
-<!-- ─── PRODUCTS ──────────────────────────────────────────────────────────────── -->
-<section class="section" id="products">
-  <div class="section-header">
-    <h2>Our Collection</h2>
-    <p>Premium full-grain leather, zero compromises</p>
-    <div class="divider"></div>
+<!-- ─── SHOP BY CATEGORY ──────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="sec-header-row">
+    <div><div class="sec-title">Shop by Category</div><div class="sec-sub">Find your perfect style</div></div>
+    <a href="#products" class="view-all">View All →</a>
+  </div>
+  <div class="cat-strip cats" id="catStrip"></div>
+</section>
+
+<!-- ─── PRODUCTS ──────────────────────────────────────────────────────────── -->
+<section class="section products-bg" id="products">
+  <div class="sec-header-row">
+    <div><div class="sec-title">New Arrivals</div><div class="sec-sub">Handpicked for you this season</div></div>
+  </div>
+  <div class="filter-row">
+    <div class="filter-chips" id="filterChips"></div>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Sort: Featured</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="discount">Best Discount</option>
+    </select>
   </div>
   <div class="product-grid" id="productGrid"></div>
 </section>
 
-<!-- ─── FEATURES ─────────────────────────────────────────────────────────────── -->
-<section class="section features" id="features">
-  <div class="section-header">
-    <h2>Why LeatherCraft?</h2>
-    <p>We stand behind every stitch</p>
-    <div class="divider"></div>
+<!-- ─── PROMO BANNER ──────────────────────────────────────────────────────── -->
+<section class="promo-banner">
+  <div>
+    <div class="promo-tag">🔥 Limited Time Offer</div>
+    <h2 class="promo-title">Up to <span>40% Off</span><br/>Best Sellers</h2>
+    <p class="promo-sub">Premium leather at prices you'll love. Our most-loved styles are now on sale — for a limited time only.</p>
+    <a href="#products" class="btn-gold" onclick="filterByChip('sale')">Shop the Sale →</a>
   </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🌿</div>
-      <h3>Sustainably Sourced</h3>
-      <p>Full-grain leather from certified, eco-conscious tanneries with transparent supply chains.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">✋</div>
-      <h3>100% Handcrafted</h3>
-      <p>Every bag is hand-cut, hand-stitched, and hand-finished by skilled artisans.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <h3>Lifetime Guarantee</h3>
-      <p>We stand behind our craftsmanship. If anything breaks, we'll repair or replace it free.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🚚</div>
-      <h3>Free Shipping</h3>
-      <p>Complimentary worldwide shipping on all orders over $150. Delivered in 3–5 business days.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">↩️</div>
-      <h3>30-Day Returns</h3>
-      <p>Not in love with your bag? Return it within 30 days for a full, no-questions-asked refund.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎁</div>
-      <h3>Gift Wrapping</h3>
-      <p>Every order ships in our signature gift box with a personalised handwritten card.</p>
-    </div>
+  <div class="promo-emoji-grid">
+    <div class="promo-ec">👝</div>
+    <div class="promo-ec">🎒</div>
+    <div class="promo-ec">💼</div>
+    <div class="promo-ec">🧳</div>
   </div>
 </section>
 
-<!-- ─── TESTIMONIALS ──────────────────────────────────────────────────────────── -->
-<section class="section testimonials" id="testimonials">
-  <div class="section-header">
-    <h2>Customer Love</h2>
-    <p>Real reviews from real customers</p>
-    <div class="divider"></div>
-  </div>
-  <div class="testimonial-grid">
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <p>"The quality is unreal. I've had my Nomad Backpack for two years and it only looks better with age. This is the last bag I'll ever buy."</p>
-      <div class="reviewer">
-        <div class="avatar">👨</div>
-        <div>
-          <div class="reviewer-name">James M.</div>
-          <div class="reviewer-loc">New York, USA</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <p>"I bought the Classic Tote as a work bag and get compliments every single day. The leather is buttery soft and the hardware is super solid."</p>
-      <div class="reviewer">
-        <div class="avatar">👩</div>
-        <div>
-          <div class="reviewer-name">Priya S.</div>
-          <div class="reviewer-loc">London, UK</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <p>"Ordered the Executive Briefcase for my husband's birthday. He absolutely loves it — the craftsmanship is incredible and packaging was stunning."</p>
-      <div class="reviewer">
-        <div class="avatar">👩</div>
-        <div>
-          <div class="reviewer-name">Sophie L.</div>
-          <div class="reviewer-loc">Melbourne, AU</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── NEWSLETTER ─────────────────────────────────────────────────────────────── -->
-<section class="newsletter" id="newsletter">
-  <h2>Join the Craft Community</h2>
-  <p>Get early access to new drops, care tips, and 10% off your first order.</p>
-  <form class="newsletter-form" onsubmit="handleNewsletter(event)">
-    <input type="email" placeholder="your@email.com" required />
-    <button type="submit">Subscribe</button>
-  </form>
-</section>
-
-<!-- ─── FOOTER ────────────────────────────────────────────────────────────────── -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo">Leather<span>Craft</span></div>
-      <p>Handcrafted leather goods made with love and lasting quality. Each piece tells a story — yours starts here.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Shop</h4>
-      <ul>
-        <li><a href="#">Backpacks</a></li>
-        <li><a href="#">Tote Bags</a></li>
-        <li><a href="#">Briefcases</a></li>
-        <li><a href="#">Crossbody Bags</a></li>
-        <li><a href="#">Wallets</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Help</h4>
-      <ul>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Shipping Policy</a></li>
-        <li><a href="#">Returns</a></li>
-        <li><a href="#">Care Guide</a></li>
-        <li><a href="#">Track Order</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#">Our Story</a></li>
-        <li><a href="#">Sustainability</a></li>
-        <li><a href="#">Wholesale</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Press</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    &copy; 2026 LeatherCraft. All rights reserved. &nbsp;·&nbsp; Privacy Policy &nbsp;·&nbsp; Terms of Service
-  </div>
-</footer>
-
-<!-- ─── CART SIDEBAR ──────────────────────────────────────────────────────────── -->
-<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-<div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-head">
-    <h3>Your Cart</h3>
-    <button class="close-cart" onclick="toggleCart()">×</button>
-  </div>
-  <div class="cart-items" id="cartItems">
-    <div class="cart-empty">
-      <div class="empty-icon">🛍</div>
-      <p>Your cart is empty</p>
-    </div>
-  </div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-total">
-      <span>Total</span>
-      <span id="cartTotal">$0.00</span>
-    </div>
-    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+<!-- ─── FEATURES BAR ──────────────────────────────────────────────────────── -->
+<div class="features-bar">
+  <div class="features-inner">
+    <div class="feat-item"><div class="feat-icon">🚚</div><div><div class="feat-title">Free Shipping</div><div class="feat-sub">On orders over ₹5,000</div></div></div>
+    <div class="feat-divider"></div>
+    <div class="feat-item"><div class="feat-icon">↩️</div><div><div class="feat-title">Easy Returns</div><div class="feat-sub">30-day no-questions policy</div></div></div>
+    <div class="feat-divider"></div>
+    <div class="feat-item"><div class="feat-icon">🛡️</div><div><div class="feat-title">Lifetime Guarantee</div><div class="feat-sub">We'll repair or replace, free</div></div></div>
+    <div class="feat-divider"></div>
+    <div class="feat-item"><div class="feat-icon">✋</div><div><div class="feat-title">Handcrafted</div><div class="feat-sub">By master artisans</div></div></div>
+    <div class="feat-divider"></div>
+    <div class="feat-item"><div class="feat-icon">🔒</div><div><div class="feat-title">Secure Payments</div><div class="feat-sub">100% safe transactions</div></div></div>
   </div>
 </div>
 
-<!-- ─── CHECKOUT MODAL ────────────────────────────────────────────────────────── -->
-<div class="modal-overlay" id="checkoutModal" onclick="handleModalOverlayClick(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Checkout</h3>
-      <button class="close-cart" onclick="closeModal()">×</button>
+<!-- ─── TESTIMONIALS ──────────────────────────────────────────────────────── -->
+<section class="section testi-bg">
+  <div class="sec-header-row">
+    <div><div class="sec-title">What Our Customers Say</div><div class="sec-sub">Trusted by over 10,000 happy buyers</div></div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The Nomad Backpack is absolutely stunning. The leather quality is unreal — it gets better with age. Worth every rupee and then some."</p>
+      <div class="testi-author"><div class="tav">👨</div><div><div class="tav-name">Arjun Mehta</div><div class="tav-loc">Mumbai, India</div></div></div>
     </div>
-    <form onsubmit="submitOrder(event)" autocomplete="on">
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" name="name" placeholder="Jane Smith" required />
-          </div>
-          <div class="form-group">
-            <label>Email *</label>
-            <input type="email" name="email" placeholder="jane@email.com" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="tel" name="phone" placeholder="+1 555 000 0000" />
-        </div>
-        <div class="form-group">
-          <label>Shipping Address</label>
-          <input type="text" name="address" placeholder="123 Main Street" />
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>City</label>
-            <input type="text" name="city" placeholder="New York" />
-          </div>
-          <div class="form-group">
-            <label>Country</label>
-            <input type="text" name="country" placeholder="USA" />
-          </div>
-        </div>
-        <div class="order-summary" id="modalOrderSummary"></div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Bought the Classic Tote as a work bag and I get compliments every single day. The stitching is immaculate and the hardware is super solid."</p>
+      <div class="testi-author"><div class="tav">👩</div><div><div class="tav-name">Priya Sharma</div><div class="tav-loc">Bangalore, India</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Gifted the Executive Briefcase to my husband — he was floored. The packaging was luxurious and the craftsmanship is extraordinary."</p>
+      <div class="testi-author"><div class="tav">👩</div><div><div class="tav-name">Sneha Kapoor</div><div class="tav-loc">Delhi, India</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWSLETTER ────────────────────────────────────────────────────────── -->
+<section class="newsletter-sec">
+  <div class="nl-icon">✉️</div>
+  <h2 class="nl-title">Join the Inner Circle</h2>
+  <p class="nl-sub">Get early access to new drops, exclusive styling tips, and 10% off your first order.</p>
+  <form class="nl-form" onsubmit="handleNewsletter(event)">
+    <input type="email" placeholder="your@email.com" required/>
+    <button type="submit">Subscribe</button>
+  </form>
+  <p class="nl-trust">🔒 No spam, ever. Unsubscribe any time.</p>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-l" style="color:#E0C8A8">Leather</span><span class="logo-c">Craft</span></div>
+      <p>Handcrafted leather goods made with love and lasting quality. Each piece tells a story — yours starts here.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">📘</a>
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">🐦</a>
+        <a href="#" class="social-btn">▶️</a>
       </div>
-      <div class="modal-footer">
-        <button type="submit" class="checkout-btn">Place Order →</button>
+    </div>
+    <div class="fcol"><h5>Shop</h5><ul><li><a href="#">Backpacks</a></li><li><a href="#">Tote Bags</a></li><li><a href="#">Briefcases</a></li><li><a href="#">Crossbody</a></li><li><a href="#">Duffels</a></li><li><a href="#">Wallets</a></li></ul></div>
+    <div class="fcol"><h5>Help</h5><ul><li><a href="#">FAQ</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">Returns</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Track Order</a></li><li><a href="#">Care Tips</a></li></ul></div>
+    <div class="fcol"><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Craftsmanship</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Wholesale</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div>
+    <div class="fcol"><h5>Contact</h5><ul><li><a href="#">📧 hello@leathercraft.in</a></li><li><a href="#">📞 1800-LEATHER</a></li><li><a href="#">📍 Mumbai, India</a></li><li><a href="#">Mon–Sat 9am–6pm</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 LeatherCraft. All rights reserved.</p>
+    <div class="footer-payments">
+      <span class="pay-badge">VISA</span><span class="pay-badge">Mastercard</span>
+      <span class="pay-badge">UPI</span><span class="pay-badge">GPay</span>
+      <span class="pay-badge">PayTM</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── OVERLAY & CART DRAWER ─────────────────────────────────────────────── -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cd-head">
+    <div style="display:flex;align-items:center"><h3>Your Bag</h3><span class="cd-count" id="drawerCount">0</span></div>
+    <button class="cd-close" onclick="toggleCart()">×</button>
+  </div>
+  <div class="cd-body" id="cartBody">
+    <div class="cd-empty"><div class="cd-empty-icon">🛍</div><p>Your bag is empty</p></div>
+  </div>
+  <div class="cd-foot" id="cartFoot" style="display:none">
+    <div class="cd-subtotal"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+    <div class="cd-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="checkout-btn" onclick="openCheckout()">Checkout Securely 🔒</button>
+  </div>
+</div>
+
+<!-- ─── CHECKOUT MODAL ────────────────────────────────────────────────────── -->
+<div class="modal-bg" id="checkoutModal" onclick="handleModalClick(event)">
+  <div class="modal">
+    <div class="mhead"><h3>Checkout</h3><button class="mclose" onclick="closeCheckout()">×</button></div>
+    <form onsubmit="submitOrder(event)">
+      <div class="mbody">
+        <div class="form-grid">
+          <div class="fg"><label>Full Name *</label><input type="text" name="name" placeholder="Arjun Mehta" required/></div>
+          <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="arjun@email.com" required/></div>
+          <div class="fg" style="grid-column:1/-1"><label>Phone</label><input type="tel" name="phone" placeholder="+91 98000 00000"/></div>
+          <div class="fg" style="grid-column:1/-1"><label>Delivery Address</label><input type="text" name="address" placeholder="123 MG Road, Flat 4B"/></div>
+          <div class="fg"><label>City</label><input type="text" name="city" placeholder="Mumbai"/></div>
+          <div class="fg"><label>Country</label><input type="text" name="country" placeholder="India"/></div>
+        </div>
+        <div class="order-box" id="orderSummaryBox"></div>
       </div>
+      <div class="mfoot"><button class="place-btn" type="submit">Place Order →</button></div>
     </form>
   </div>
 </div>
 
-<!-- ─── TOAST ─────────────────────────────────────────────────────────────────── -->
+<!-- ─── WISHLIST DRAWER (reuses cart drawer styles) ──────────────────────── -->
+<div class="cart-drawer" id="wishlistDrawer" style="right:-440px">
+  <div class="cd-head">
+    <h3>Wishlist 🤍</h3>
+    <button class="cd-close" onclick="toggleWishlist()">×</button>
+  </div>
+  <div class="cd-body" id="wishlistBody">
+    <div class="cd-empty"><div class="cd-empty-icon">🤍</div><p>Your wishlist is empty</p></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ── Product Data ─────────────────────────────────────────────────────────── */
-  const products = [
-    { id:1, name:"Nomad Backpack",       category:"Backpack",    price:249, oldPrice:299, emoji:"🎒", badge:"Best Seller", desc:"Rugged full-grain leather with padded laptop sleeve and brass fittings. Perfect for daily commutes and weekend adventures." },
-    { id:2, name:"Classic Tote",         category:"Tote",        price:189, oldPrice:null, emoji:"👜", badge:null,         desc:"Spacious, open-top tote with an interior zip pocket. Hand-stitched reinforced handles that won't stretch over time." },
-    { id:3, name:"Executive Briefcase",  category:"Briefcase",   price:329, oldPrice:399, emoji:"💼", badge:"New",        desc:"Two-gusset briefcase with shoulder strap, combination lock, and four organizational pockets for the modern professional." },
-    { id:4, name:"City Crossbody",       category:"Crossbody",   price:149, oldPrice:null, emoji:"👝", badge:null,         desc:"Compact and stylish. Fits all your essentials with an adjustable strap and antique-brass magnetic closure." },
-    { id:5, name:"Vintage Duffel",       category:"Duffel",      price:279, oldPrice:319, emoji:"🧳", badge:"Sale",       desc:"Weekend-ready duffel with a waterproof lining, removable shoe bag, and rolled leather handles." },
-    { id:6, name:"Slim Messenger",       category:"Messenger",   price:199, oldPrice:null, emoji:"🗂️", badge:null,         desc:"Minimalist flap messenger with a quick-release buckle, hidden back pocket, and full-grain Veg-tan leather body." },
-    { id:7, name:"Mini Bucket Bag",      category:"Bucket",      price:169, oldPrice:199, emoji:"🪣", badge:"Sale",       desc:"Drawstring closure with a detachable leather pouch. Comes in two colourways — caramel and midnight brown." },
-    { id:8, name:"Laptop Satchel",       category:"Satchel",     price:289, oldPrice:null, emoji:"💼", badge:"New",        desc:"Structured satchel with a padded 15\" laptop compartment, two exterior pockets, and a polished turnlock." },
-  ];
+const API = (location.protocol==='file:'||!location.hostname)?'http://localhost:3000/api':'/api';
 
-  const API = (location.protocol === 'file:' || !location.hostname) ? 'http://localhost:3000/api' : '/api';
-  let cart = {};
+/* ── Data ──────────────────────────────────────────────────────────────────── */
+const products = [
+  {id:1,name:'Nomad Backpack',     cat:'Backpack',  price:18990,mrp:24990,emoji:'🎒',badge:'BESTSELLER',bg:'pcard-img-bg1',rating:4.8,reviews:1240,sale:false},
+  {id:2,name:'Classic Tote',       cat:'Tote',      price:13990,mrp:13990,emoji:'👜',badge:'NEW',       bg:'pcard-img-bg2',rating:4.7,reviews:842,sale:false},
+  {id:3,name:'Executive Briefcase',cat:'Briefcase', price:24490,mrp:32990,emoji:'💼',badge:'SALE',      bg:'pcard-img-bg3',rating:4.9,reviews:673,sale:true},
+  {id:4,name:'City Crossbody',     cat:'Crossbody', price:10990,mrp:10990,emoji:'👝',badge:null,        bg:'pcard-img-bg4',rating:4.6,reviews:521,sale:false},
+  {id:5,name:'Vintage Duffel',     cat:'Duffel',    price:20490,mrp:26990,emoji:'🧳',badge:'SALE',      bg:'pcard-img-bg5',rating:4.8,reviews:389,sale:true},
+  {id:6,name:'Slim Messenger',     cat:'Messenger', price:14990,mrp:14990,emoji:'🗂️',badge:'NEW',       bg:'pcard-img-bg6',rating:4.5,reviews:298,sale:false},
+  {id:7,name:'Mini Bucket Bag',    cat:'Bucket',    price:12490,mrp:16990,emoji:'🪣',badge:'SALE',      bg:'pcard-img-bg7',rating:4.7,reviews:445,sale:true},
+  {id:8,name:'Laptop Satchel',     cat:'Satchel',   price:21490,mrp:21490,emoji:'💼',badge:'NEW',       bg:'pcard-img-bg8',rating:4.8,reviews:312,sale:false},
+];
+const cats = [
+  {emoji:'🎒',label:'Backpacks',cat:'Backpack',bg:'linear-gradient(135deg,#8B4513,#D2691E)'},
+  {emoji:'👜',label:'Totes',cat:'Tote',bg:'linear-gradient(135deg,#5C3D2E,#8B6050)'},
+  {emoji:'💼',label:'Briefcases',cat:'Briefcase',bg:'linear-gradient(135deg,#2C1810,#5C3020)'},
+  {emoji:'👝',label:'Crossbody',cat:'Crossbody',bg:'linear-gradient(135deg,#6B3A20,#A0622A)'},
+  {emoji:'🧳',label:'Duffels',cat:'Duffel',bg:'linear-gradient(135deg,#3D2010,#7A4020)'},
+  {emoji:'🗂️',label:'Messengers',cat:'Messenger',bg:'linear-gradient(135deg,#4A2A15,#8A5030)'},
+  {emoji:'🪣',label:'Bucket Bags',cat:'Bucket',bg:'linear-gradient(135deg,#5A3018,#9A6030)'},
+  {emoji:'💳',label:'Wallets',cat:'Wallet',bg:'linear-gradient(135deg,#3D1F0A,#7A4020)'},
+];
+let cart={}, wishlist=new Set(), currentFilter='all', currentSort='default';
+let filteredProducts=[...products];
 
-  /* ── Render Products ──────────────────────────────────────────────────────── */
-  function renderProducts() {
-    const grid = document.getElementById('productGrid');
-    grid.innerHTML = products.map(p => `
-      <div class="product-card">
-        <div class="product-img">
-          ${p.badge ? `<div class="badge">${p.badge}</div>` : ''}
-          <span>${p.emoji}</span>
+/* ── Helpers ───────────────────────────────────────────────────────────────── */
+const fmt=n=>'₹'+n.toLocaleString('en-IN');
+const disc=p=>p.mrp>p.price?Math.round((1-p.price/p.mrp)*100):0;
+const stars=r=>'★'.repeat(Math.floor(r))+(r%1>=.5?'½':'')+'☆'.repeat(5-Math.ceil(r));
+
+/* ── Render Categories ─────────────────────────────────────────────────────── */
+function renderCats(){
+  document.getElementById('catStrip').innerHTML=cats.map(c=>`
+    <div class="cat-pill" onclick="filterByChip('${c.cat}')">
+      <div class="cat-circle" style="background:${c.bg}">${c.emoji}</div>
+      <span class="cat-label">${c.label}</span>
+    </div>`).join('');
+}
+
+/* ── Filter Chips ──────────────────────────────────────────────────────────── */
+function renderFilterChips(){
+  const allCats=['all',...new Set(products.map(p=>p.cat)),'sale'];
+  document.getElementById('filterChips').innerHTML=allCats.map(c=>`
+    <button class="chip${currentFilter===c?' active':''}" onclick="filterByChip('${c}')">${c==='all'?'All':c==='sale'?'🔥 On Sale':c}</button>`
+  ).join('');
+}
+function filterByChip(cat){
+  currentFilter=cat;
+  document.getElementById('products')?.scrollIntoView({behavior:'smooth',block:'start'});
+  applyFilters();
+  renderFilterChips();
+}
+function scrollToProducts(cat){filterByChip(cat);}
+function sortProducts(val){currentSort=val;applyFilters();}
+function applyFilters(){
+  let list=[...products];
+  if(currentFilter==='sale') list=list.filter(p=>p.sale);
+  else if(currentFilter!=='all') list=list.filter(p=>p.cat===currentFilter);
+  if(currentSort==='price-asc') list.sort((a,b)=>a.price-b.price);
+  else if(currentSort==='price-desc') list.sort((a,b)=>b.price-a.price);
+  else if(currentSort==='discount') list.sort((a,b)=>disc(b)-disc(a));
+  filteredProducts=list;
+  renderGrid();
+}
+
+/* ── Render Products ───────────────────────────────────────────────────────── */
+function renderGrid(){
+  const grid=document.getElementById('productGrid');
+  if(!filteredProducts.length){grid.innerHTML='<p style="color:var(--gray);padding:2rem;grid-column:1/-1">No products found.</p>';return;}
+  grid.innerHTML=filteredProducts.map(p=>{
+    const d=disc(p);
+    const badgeClass=p.badge==='SALE'?'badge-sale':p.badge==='NEW'?'badge-new':'badge-hot';
+    return `
+    <div class="pcard" onclick="handleCardClick(event,${p.id})">
+      <div class="pcard-img ${p.bg}">
+        ${p.badge?`<span class="pcard-badge ${badgeClass}">${p.badge}</span>`:''}
+        <button class="pcard-wish${wishlist.has(p.id)?' wished':''}" onclick="toggleWish(event,${p.id})">
+          <span class="heart">${wishlist.has(p.id)?'❤️':'🤍'}</span>
+        </button>
+        <span style="position:relative;z-index:1">${p.emoji}</span>
+        <button class="pcard-atb" onclick="addToCart(event,${p.id})">+ Add to Bag</button>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-cat">${p.cat}</div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-stars">
+          <span class="stars-icons">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</span>
+          <span class="stars-count">(${p.reviews.toLocaleString()})</span>
         </div>
-        <div class="product-info">
-          <div class="product-category">${p.category}</div>
-          <div class="product-name">${p.name}</div>
-          <div class="product-desc">${p.desc}</div>
-          <div class="product-footer">
-            <div>
-              <span class="price">$${p.price}</span>
-              ${p.oldPrice ? `<span class="price-old">$${p.oldPrice}</span>` : ''}
-            </div>
-            <button class="add-cart-btn" onclick="addToCart(${p.id})">
-              + Add
-            </button>
-          </div>
+        <div class="pcard-price">
+          <span class="price-now">${fmt(p.price)}</span>
+          ${p.mrp>p.price?`<span class="price-mrp">${fmt(p.mrp)}</span><span class="price-off">${d}% off</span>`:''}
         </div>
       </div>
-    `).join('');
+    </div>`;
+  }).join('');
+}
+
+function handleCardClick(e,id){
+  if(e.target.closest('.pcard-wish')||e.target.closest('.pcard-atb')) return;
+}
+
+/* ── Wishlist ──────────────────────────────────────────────────────────────── */
+function toggleWish(e,id){
+  e.stopPropagation();
+  const p=products.find(x=>x.id===id);
+  if(wishlist.has(id)){wishlist.delete(id);showToast(`Removed from wishlist`);}
+  else{wishlist.add(id);showToast(`❤️ ${p.name} wishlisted!`);}
+  updateWishCount();
+  renderGrid();
+  renderWishlist();
+}
+function updateWishCount(){
+  const el=document.getElementById('wishCount');
+  el.textContent=wishlist.size;
+  el.style.display=wishlist.size?'flex':'none';
+}
+function renderWishlist(){
+  const body=document.getElementById('wishlistBody');
+  if(!wishlist.size){body.innerHTML='<div class="cd-empty"><div class="cd-empty-icon">🤍</div><p>Your wishlist is empty</p></div>';return;}
+  body.innerHTML=[...wishlist].map(id=>{
+    const p=products.find(x=>x.id===id);
+    return `<div class="cd-item">
+      <div class="cd-item-img ${p.bg}">${p.emoji}</div>
+      <div class="cd-item-info">
+        <div class="cd-item-name">${p.name}</div>
+        <div class="cd-item-price">${fmt(p.price)}</div>
+        <button onclick="addToCart(event,${p.id})" style="font-size:.78rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.05em">+ Add to Bag</button>
+      </div>
+      <button class="cd-remove" onclick="toggleWish(event,${p.id})">×</button>
+    </div>`;
+  }).join('');
+}
+function toggleWishlist(){
+  const wl=document.getElementById('wishlistDrawer');
+  const cd=document.getElementById('cartDrawer');
+  cd.classList.remove('open');
+  const isOpen=wl.style.right==='0px';
+  wl.style.right=isOpen?'-440px':'0px';
+  document.getElementById('overlay').classList.toggle('open',!isOpen);
+  document.body.style.overflow=isOpen?'':'hidden';
+  renderWishlist();
+}
+
+/* ── Cart ──────────────────────────────────────────────────────────────────── */
+function addToCart(e,id){
+  if(e) e.stopPropagation();
+  cart[id]=(cart[id]||0)+1;
+  const p=products.find(x=>x.id===id);
+  updateCartUI();
+  showToast(`🛍 ${p.name} added to bag!`);
+}
+function changeQty(id,d){
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  updateCartUI();
+}
+function removeFromCart(id){delete cart[id];updateCartUI();}
+function updateCartUI(){
+  const total=Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartCount').textContent=total;
+  document.getElementById('drawerCount').textContent=total;
+  const body=document.getElementById('cartBody');
+  const foot=document.getElementById('cartFoot');
+  if(!Object.keys(cart).length){
+    body.innerHTML='<div class="cd-empty"><div class="cd-empty-icon">🛍</div><p>Your bag is empty</p></div>';
+    foot.style.display='none';return;
   }
+  let subtotal=0;
+  body.innerHTML=Object.entries(cart).map(([id,qty])=>{
+    const p=products.find(x=>x.id===+id);
+    subtotal+=p.price*qty;
+    return `<div class="cd-item">
+      <div class="cd-item-img ${p.bg}">${p.emoji}</div>
+      <div class="cd-item-info">
+        <div class="cd-item-name">${p.name}</div>
+        <div class="cd-item-price">${fmt(p.price)}</div>
+        <div class="cd-qty">
+          <button class="qbtn" onclick="changeQty(${p.id},-1)">−</button>
+          <span class="qnum">${qty}</span>
+          <button class="qbtn" onclick="changeQty(${p.id},1)">+</button>
+        </div>
+      </div>
+      <button class="cd-remove" onclick="removeFromCart(${p.id})">×</button>
+    </div>`;
+  }).join('');
+  foot.style.display='block';
+  document.getElementById('cartSubtotal').textContent=fmt(subtotal);
+  document.getElementById('cartTotal').textContent=fmt(subtotal);
+}
+function toggleCart(){
+  const cd=document.getElementById('cartDrawer');
+  const wl=document.getElementById('wishlistDrawer');
+  wl.style.right='-440px';
+  const isOpen=cd.classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open',isOpen);
+  document.body.style.overflow=isOpen?'hidden':'';
+}
+function closeAll(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('wishlistDrawer').style.right='-440px';
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
 
-  /* ── Cart Logic ───────────────────────────────────────────────────────────── */
-  function addToCart(id) {
-    cart[id] = (cart[id] || 0) + 1;
-    updateCartUI();
-    const p = products.find(x => x.id === id);
-    showToast(`${p.emoji} ${p.name} added to cart!`);
+/* ── Checkout ──────────────────────────────────────────────────────────────── */
+function openCheckout(){
+  closeAll();
+  let subtotal=0;
+  const lines=Object.entries(cart).map(([id,qty])=>{
+    const p=products.find(x=>x.id===+id);
+    subtotal+=p.price*qty;
+    return `<div class="ob-item"><span>${p.emoji} ${p.name} × ${qty}</span><span>${fmt(p.price*qty)}</span></div>`;
+  }).join('');
+  document.getElementById('orderSummaryBox').innerHTML=
+    `<h4>Order Summary</h4>${lines}<div class="ob-total"><span>Total</span><span>${fmt(subtotal)}</span></div>`;
+  document.getElementById('checkoutModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCheckout(){
+  document.getElementById('checkoutModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleModalClick(e){if(e.target===e.currentTarget)closeCheckout();}
+async function submitOrder(e){
+  e.preventDefault();
+  const f=e.target;
+  const cartPayload={};
+  for(const [id,qty] of Object.entries(cart)){
+    const p=products.find(x=>x.id===+id);
+    cartPayload[id]={name:p.name,price:p.price,qty};
   }
-
-  function changeQty(id, delta) {
-    cart[id] = (cart[id] || 0) + delta;
-    if (cart[id] <= 0) delete cart[id];
-    updateCartUI();
+  const btn=f.querySelector('button[type=submit]');
+  btn.disabled=true;btn.textContent='Placing order…';
+  try{
+    const res=await fetch(API+'/orders',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:f.name.value,email:f.email.value,phone:f.phone.value,
+        address:f.address.value,city:f.city.value,country:f.country.value,cart:cartPayload})});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error);
+    closeCheckout();cart={};updateCartUI();
+    showToast(`🎉 Order #${data.orderId} confirmed! Thank you.`);
+  }catch(err){
+    showToast('⚠️ '+(err.message||'Order failed. Try again.'));
+    btn.disabled=false;btn.innerHTML='Place Order →';
   }
+}
 
-  function removeFromCart(id) {
-    delete cart[id];
-    updateCartUI();
-  }
+/* ── Newsletter ────────────────────────────────────────────────────────────── */
+async function handleNewsletter(e){
+  e.preventDefault();
+  const email=e.target.querySelector('input[type=email]').value;
+  try{
+    const res=await fetch(API+'/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error);
+    showToast('🎉 Subscribed! Check your inbox for 10% off.');
+    e.target.reset();
+  }catch(err){showToast('⚠️ '+(err.message||'Subscription failed.'));}
+}
 
-  function updateCartUI() {
-    const total = Object.values(cart).reduce((a, b) => a + b, 0);
-    document.getElementById('cartCount').textContent = total;
+/* ── Toast ─────────────────────────────────────────────────────────────────── */
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+}
 
-    const items = document.getElementById('cartItems');
-    const footer = document.getElementById('cartFooter');
-
-    if (Object.keys(cart).length === 0) {
-      items.innerHTML = `<div class="cart-empty"><div class="empty-icon">🛍</div><p>Your cart is empty</p></div>`;
-      footer.style.display = 'none';
-      return;
-    }
-
-    footer.style.display = 'block';
-    let subtotal = 0;
-    items.innerHTML = Object.entries(cart).map(([id, qty]) => {
-      const p = products.find(x => x.id === +id);
-      subtotal += p.price * qty;
-      return `
-        <div class="cart-item">
-          <div class="cart-item-img">${p.emoji}</div>
-          <div class="cart-item-details">
-            <div class="cart-item-name">${p.name}</div>
-            <div class="cart-item-price">$${p.price}</div>
-            <div class="qty-controls">
-              <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
-              <span class="qty-num">${qty}</span>
-              <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
-            </div>
-          </div>
-          <button class="remove-item" onclick="removeFromCart(${p.id})">×</button>
-        </div>`;
-    }).join('');
-
-    document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
-  }
-
-  /* ── Cart Open/Close ──────────────────────────────────────────────────────── */
-  function toggleCart() {
-    document.getElementById('cartSidebar').classList.toggle('open');
-    document.getElementById('cartOverlay').classList.toggle('open');
-    document.body.style.overflow = document.getElementById('cartSidebar').classList.contains('open') ? 'hidden' : '';
-  }
-
-  /* ── Checkout ─────────────────────────────────────────────────────────────── */
-  function checkout() {
-    // Populate order summary inside modal
-    let subtotal = 0;
-    const lines = Object.entries(cart).map(([id, qty]) => {
-      const p = products.find(x => x.id === +id);
-      subtotal += p.price * qty;
-      return `<div class="summary-item"><span>${p.emoji} ${p.name} × ${qty}</span><span>$${(p.price * qty).toFixed(2)}</span></div>`;
-    }).join('');
-    document.getElementById('modalOrderSummary').innerHTML =
-      `<h4>Order Summary</h4>${lines}<div class="summary-total"><span>Total</span><span>$${subtotal.toFixed(2)}</span></div>`;
-
-    toggleCart();
-    document.getElementById('checkoutModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function handleModalOverlayClick(e) {
-    if (e.target === e.currentTarget) closeModal();
-  }
-
-  async function submitOrder(e) {
-    e.preventDefault();
-    const f = e.target;
-    const cartPayload = {};
-    for (const [id, qty] of Object.entries(cart)) {
-      const p = products.find(x => x.id === +id);
-      cartPayload[id] = { name: p.name, price: p.price, qty };
-    }
-    const btn = f.querySelector('button[type=submit]');
-    btn.disabled = true;
-    btn.textContent = 'Placing order…';
-    try {
-      const res = await fetch(API + '/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name:    f.name.value,
-          email:   f.email.value,
-          phone:   f.phone.value,
-          address: f.address.value,
-          city:    f.city.value,
-          country: f.country.value,
-          cart:    cartPayload
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      closeModal();
-      cart = {};
-      updateCartUI();
-      showToast(`🎉 Order #${data.orderId} confirmed! Total: $${data.total.toFixed(2)}`);
-    } catch (err) {
-      showToast('⚠️ ' + (err.message || 'Could not place order.'));
-      btn.disabled = false;
-      btn.textContent = 'Place Order';
-    }
-  }
-
-  function closeModal() {
-    document.getElementById('checkoutModal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  /* ── Newsletter ───────────────────────────────────────────────────────────── */
-  async function handleNewsletter(e) {
-    e.preventDefault();
-    const email = e.target.querySelector('input[type=email]').value;
-    try {
-      const res = await fetch(API + '/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      showToast('🎉 Subscribed! Check your inbox for 10% off.');
-      e.target.reset();
-    } catch (err) {
-      showToast('⚠️ ' + (err.message || 'Subscription failed.'));
-    }
-  }
-
-  /* ── Toast ────────────────────────────────────────────────────────────────── */
-  let toastTimer;
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
-  }
-
-  /* ── Init ─────────────────────────────────────────────────────────────────── */
-  renderProducts();
+/* ── Init ──────────────────────────────────────────────────────────────────── */
+renderCats();
+renderFilterChips();
+renderGrid();
 </script>
 </body>
 </html>
